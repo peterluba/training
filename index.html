@@ -128,6 +128,13 @@
   #bl .todaychip{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:6px;background:var(--ink);color:var(--bg)}
   #bl .day.rest{background:var(--surface-2);box-shadow:none;border-color:transparent}
   #bl .day.rest .daytitle{color:var(--ink-2)}
+  #bl .watch{display:flex;gap:11px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);
+    border-radius:12px;padding:12px 13px;margin-bottom:12px;box-shadow:var(--shadow)}
+  #bl .watch .wic{flex:0 0 auto;color:var(--c-ink,var(--ink));margin-top:2px}
+  #bl .wlabel{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+  #bl .wtype{font-size:14px;font-weight:600;color:var(--ink);margin-top:3px;line-height:1.35}
+  #bl .wtype em{font-style:normal;font-weight:500;color:var(--ink-2)}
+  #bl .wnote{font-size:12px;color:var(--ink-2);line-height:1.5;margin-top:5px}
   #bl .focus{display:flex;gap:11px;background:var(--c-bg,var(--rest-bg));border-radius:var(--radius);padding:14px 15px;margin-bottom:14px}
   #bl .focus .fic{flex:0 0 auto;color:var(--c-ink)}
   #bl .focus p{margin:0;font-size:14px;color:var(--c-ink,var(--ink));line-height:1.55}
@@ -218,7 +225,8 @@
     play:'<path d="M8 5v14l11-7Z"/>',
     clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     swap:'<path d="M16 3l4 4-4 4M20 7H5"/><path d="M8 21l-4-4 4-4M4 17h15"/>',
-    gauge:'<path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M13.4 10.6 19 5"/><path d="M4 20a9 9 0 1 1 16 0"/>'
+    gauge:'<path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M13.4 10.6 19 5"/><path d="M4 20a9 9 0 1 1 16 0"/>',
+    watch:'<rect x="6" y="6" width="12" height="12" rx="3"/><path d="M9 6V3h6v3M9 18v3h6v-3"/><path d="M12 10v2.3l1.6 1"/>'
   };
   function ico(n,s,fill){s=s||18;var f=fill?'currentColor':'none';var sw=fill?'0':'2';
     return '<svg viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="'+f+'" stroke="currentColor" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+P[n]+'</svg>';}
@@ -254,6 +262,7 @@
 
   var DAYS=[
     { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower A", sub:"Quad-dominant", tag:"For Weight", est:"60 min",
+      watch:{types:[{n:"Traditional Strength Training"}],note:"One workout for the whole session — start it at the warm-up and end it after the walk finisher."},
       focus:"Heavy quad day. Legs load hard through a hip belt so your shoulder stays completely out of it. You should leave feeling like your thighs did real work — not maxed out.",
       secs:[
         {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
@@ -280,6 +289,7 @@
       ]},
 
     { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning", sub:"Zone 2 + core", tag:"For Time", est:"60 min",
+      watch:{types:[{n:"Indoor Walk"}],note:"One workout, start to finish. Leave it running through the core work at the end."},
       focus:"Your easy engine day. A steady Zone 2 pace — you could just barely hold a conversation. This is where fat loss and heart health quietly happen. Never gassed.",
       secs:[
         {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
@@ -298,6 +308,7 @@
       ]},
 
     { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower B", sub:"Posterior chain / glute", tag:"For Weight", est:"60 min",
+      watch:{types:[{n:"Traditional Strength Training"}],note:"One workout for the whole session — start it at the warm-up and end it after the walk finisher."},
       focus:"Heavy glute and hamstring day — the back of your legs. The hip-thrust machine loads your posterior chain hard with zero shoulder involvement. Strong glutes are your engine for walking, stairs, and eventually the court.",
       secs:[
         {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
@@ -324,6 +335,7 @@
       ]},
 
     { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning", sub:"Intervals + core", tag:"For Reps", est:"60 min",
+      watch:{types:[{n:"Indoor Cycle",f:"for the bike intervals"},{n:"Indoor Walk",f:"for the 25-min steady walk"}],note:"Two separate workouts. End the cycle when the intervals finish, then start an Indoor Walk — 25 minutes of walking logged as cycling would badly skew your calorie burn."},
       focus:"Short and intense, then a long easy walk. The hard 30-second bursts should have you breathing heavy by the end of each one — legs drive it, arm stays relaxed.",
       secs:[
         {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
@@ -344,6 +356,7 @@
       ]},
 
     { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower C", sub:"Unilateral / hypertrophy", tag:"For Reps", est:"60 min",
+      watch:{types:[{n:"Traditional Strength Training"}],note:"One workout for the whole session — start it at the warm-up and end it after the walk finisher."},
       focus:"A pump day, not a heavy day — controlled reps and higher volume chasing a deep quad-and-glute burn. Lighter on the joints than Monday and Wednesday, and it rounds out the week.",
       secs:[
         {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
@@ -374,6 +387,7 @@
       secs:[]},
 
     { t:"rec", cls:"t-rec", ico:"leaf", title:"Active recovery", sub:"Zone 2 + mobility", tag:"Recovery", est:"55 min",
+      watch:{types:[{n:"Indoor Walk"}],note:"One workout — keep it running through the mobility and core."},
       focus:"A light, restorative day. Easy cardio to flush the legs, a few minutes of mobility to stay loose, and gentle core. Should feel like active rest — never hard. Hit your 10k steps.",
       secs:[
         {l:"Main",ic:"pulse",struct:"single",meta:"Easy cardio · Zone 2",slots:["A"],
@@ -461,6 +475,12 @@
   }
   function dayHTML(w,i){
     var day=dayData(w,i),h='<div class="view '+day.cls+'">';
+    if(day.watch){
+      h+='<div class="watch"><span class="wic">'+ico("watch",20)+'</span><div><div class="wlabel">Apple Watch \u2014 workout type</div>';
+      for(var t=0;t<day.watch.types.length;t++){var wt=day.watch.types[t];
+        h+='<div class="wtype">'+esc(wt.n)+(wt.f?' <em>'+esc(wt.f)+'</em>':'')+'</div>';}
+      h+='<div class="wnote">'+esc(day.watch.note)+'</div></div></div>';
+    }
     h+='<div class="focus"><span class="fic">'+ico(day.ico,20)+'</span><p>'+esc(day.focus)+'</p></div>';
     if(w===0&&day.secs.length)h+='<div class="reentry"><span class="ric">'+ico("sunrise",18)+'</span><p><b>Re-entry week&nbsp;&nbsp;</b>You\'re back after ~3 weeks off, so Week 1 is deliberately lighter — fewer sets, easier weights than you think, and 3–4 reps in reserve on everything (not the usual 2). Expect some soreness the first few days; it fades fast. Volume steps up next week.</p></div>';
     if(day.t!=="rest")h+='<div class="safety"><span class="shd">'+ico("shield",18)+'</span><p><b>Shoulder rule&nbsp;&nbsp;</b>Right arm does nothing — no weight held, no hard grip, no bracing. Nothing overhead or behind the body. Any ache or instability in the shoulder → stop that movement.</p></div>';
