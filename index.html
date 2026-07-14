@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Training</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Training">
+<meta name="application-name" content="Training">
+<meta name="description" content="Four-week shoulder-safe lower-body training block.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f9f9f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0d12" media="(prefers-color-scheme: dark)">
+<style>
+  html,body{margin:0;padding:0;background:#f9f9f7;overscroll-behavior:none}
+  @media (prefers-color-scheme:dark){html,body{background:#0b0d12}}
+</style>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#f9f9f7; --surface:#ffffff; --surface-2:#efeeea; --ink:#1a1a1c; --ink-2:#5b5c63; --ink-3:#8d8e96; --line:#e6e5e0;
+    --blue:#2f49e6; --blue-ink:#1c2ca0; --blue-bg:#e9ecfd;
+    --heat:#d0522c; --heat-ink:#8c3418; --heat-bg:#fbeae2;
+    --rest:#6f7480; --rest-ink:#43474f; --rest-bg:#edece7;
+    --rec:#1f8a68; --rec-ink:#1a5c47; --rec-bg:#e1f2eb;
+    --warn-ink:#8a6212; --warn-bg:#f8eecd; --warn-line:#ecd9a3;
+    --radius:14px; --shadow:0 1px 2px rgba(20,20,30,.05),0 4px 14px rgba(20,20,30,.06);
+    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --ease:cubic-bezier(.32,.72,0,1);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0b0d12; --surface:#14161e; --surface-2:#1a1d27; --ink:#eef0f5; --ink-2:#a3a8b6; --ink-3:#6d7280; --line:#272b36;
+      --blue:#8194ff; --blue-ink:#c8d0ff; --blue-bg:#1b2140;
+      --heat:#f0855f; --heat-ink:#f6c4ae; --heat-bg:#38200f;
+      --rest:#8b91a1; --rest-ink:#c2c6d0; --rest-bg:#20232d;
+      --rec:#4cc199; --rec-ink:#bfe8da; --rec-bg:#0f2c23;
+      --warn-ink:#e8c979; --warn-bg:#2f2712; --warn-line:#4a3d18;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f9f9f7; --surface:#ffffff; --surface-2:#efeeea; --ink:#1a1a1c; --ink-2:#5b5c63; --ink-3:#8d8e96; --line:#e6e5e0;
+    --blue:#2f49e6; --blue-ink:#1c2ca0; --blue-bg:#e9ecfd;
+    --heat:#d0522c; --heat-ink:#8c3418; --heat-bg:#fbeae2;
+    --rest:#6f7480; --rest-ink:#43474f; --rest-bg:#edece7;
+    --rec:#1f8a68; --rec-ink:#1a5c47; --rec-bg:#e1f2eb;
+    --warn-ink:#8a6212; --warn-bg:#f8eecd; --warn-line:#ecd9a3;
+    --shadow:0 1px 2px rgba(20,20,30,.05),0 4px 14px rgba(20,20,30,.06);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b0d12; --surface:#14161e; --surface-2:#1a1d27; --ink:#eef0f5; --ink-2:#a3a8b6; --ink-3:#6d7280; --line:#272b36;
+    --blue:#8194ff; --blue-ink:#c8d0ff; --blue-bg:#1b2140;
+    --heat:#f0855f; --heat-ink:#f6c4ae; --heat-bg:#38200f;
+    --rest:#8b91a1; --rest-ink:#c2c6d0; --rest-bg:#20232d;
+    --rec:#4cc199; --rec-ink:#bfe8da; --rec-bg:#0f2c23;
+    --warn-ink:#e8c979; --warn-bg:#2f2712; --warn-line:#4a3d18;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  #bl{position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;overflow:hidden;
+    background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%;-webkit-user-select:none;user-select:none}
+  #bl button,#bl a{touch-action:manipulation;font-family:inherit}
+  #bl .num{font-variant-numeric:tabular-nums}
+  #bl svg{display:block}
+  #bl .t-strength{--c:var(--blue);--c-ink:var(--blue-ink);--c-bg:var(--blue-bg)}
+  #bl .t-cond{--c:var(--heat);--c-ink:var(--heat-ink);--c-bg:var(--heat-bg)}
+  #bl .t-rec{--c:var(--rec);--c-ink:var(--rec-ink);--c-bg:var(--rec-bg)}
+  #bl .t-rest{--c:var(--rest);--c-ink:var(--rest-ink);--c-bg:var(--rest-bg)}
+  #stack{position:absolute;inset:0}
+  #bl .scrim{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .34s var(--ease)}
+  #bl .page{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg);
+    transition:transform .34s var(--ease);will-change:transform;box-shadow:-1px 0 0 var(--line)}
+  #bl .dragging{transition:none!important}
+  #bl .edge{position:absolute;left:0;top:0;bottom:0;width:24px;z-index:5;touch-action:none}
+  #bl .navbar{flex:0 0 auto;position:relative;z-index:3;display:flex;align-items:center;gap:8px;
+    padding:max(11px,env(safe-area-inset-top)) 14px 11px;min-height:52px;border-bottom:1px solid var(--line);
+    background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.7) blur(16px);-webkit-backdrop-filter:saturate(1.7) blur(16px)}
+  #bl .sched-nav{border-bottom-color:transparent}
+  #bl .sched-nav.solid{border-bottom-color:var(--line)}
+  #bl .navtitle-sm{flex:1;text-align:center;font-size:16px;font-weight:600;letter-spacing:-.2px;opacity:0;transition:opacity .2s ease}
+  #bl .sched-nav.solid .navtitle-sm{opacity:1}
+  #bl .backbtn{border:none;background:none;color:var(--blue);display:flex;align-items:center;gap:1px;cursor:pointer;
+    font-size:16px;font-weight:400;padding:6px 8px 6px 0;flex:0 0 auto}
+  #bl .backbtn:active{opacity:.4}
+  #bl .navtitle{flex:1;text-align:center;font-size:16px;font-weight:600;letter-spacing:-.2px;line-height:1.15;padding-right:52px}
+  #bl .navtitle small{display:block;font-size:11.5px;font-weight:400;color:var(--ink-3);margin-top:1px}
+  #bl .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  #bl .view{padding:6px 18px calc(28px + env(safe-area-inset-bottom))}
+  #bl .homehdr{padding:12px 0 12px}
+  #bl .apptitle{font-size:34px;font-weight:700;letter-spacing:-1px;margin:0}
+  #bl .aboutlink{margin-top:9px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);
+    color:var(--ink-2);border-radius:999px;padding:7px 11px;font-size:13px;font-weight:500;cursor:pointer;box-shadow:var(--shadow)}
+  #bl .aboutlink:active{background:var(--surface-2)}
+  #bl .aboutlink .ilead{color:var(--blue);display:flex}
+  #bl .aboutlink .itrail{color:var(--ink-3);display:flex}
+  #bl .weekwrap{display:flex;gap:8px;overflow-x:auto;padding:2px 0 14px;scrollbar-width:none}
+  #bl .weekwrap::-webkit-scrollbar{display:none}
+  #bl .weekpill{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+    border-radius:11px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;text-align:center;line-height:1.2}
+  #bl .weekpill small{display:block;font-size:10.5px;font-weight:500;color:var(--ink-3);margin-top:2px}
+  #bl .weekpill[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  #bl .weekpill[aria-selected="true"] small{color:var(--bg);opacity:.7}
+  #bl .days{display:flex;flex-direction:column;gap:11px}
+  #bl .day{position:relative;display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);padding:15px 14px 15px 16px;cursor:pointer;box-shadow:var(--shadow);
+    text-align:left;width:100%;color:inherit;transition:background .12s}
+  #bl .day:active{background:var(--surface-2)}
+  #bl .day::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:4px;border-radius:0 4px 4px 0;background:var(--c,var(--rest))}
+  #bl .daydate{flex:0 0 42px;text-align:center}
+  #bl .daydate .dow{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--c-ink,var(--ink-2))}
+  #bl .daydate .dnum{font-size:22px;font-weight:700;letter-spacing:-.5px;line-height:1.05}
+  #bl .daymid{flex:1 1 auto;min-width:0}
+  #bl .daytitle{font-size:16px;font-weight:600;letter-spacing:-.2px}
+  #bl .daysub{font-size:13px;color:var(--ink-2);margin-top:1px}
+  #bl .dayright{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  #bl .chev{color:var(--ink-3);display:flex}
+  #bl .tag{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:4px 8px;border-radius:7px;background:var(--c-bg,var(--rest-bg));color:var(--c-ink,var(--rest-ink));white-space:nowrap}
+  #bl .todaychip{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:6px;background:var(--ink);color:var(--bg)}
+  #bl .day.rest{background:var(--surface-2);box-shadow:none;border-color:transparent}
+  #bl .day.rest .daytitle{color:var(--ink-2)}
+  #bl .focus{display:flex;gap:11px;background:var(--c-bg,var(--rest-bg));border-radius:var(--radius);padding:14px 15px;margin-bottom:14px}
+  #bl .focus .fic{flex:0 0 auto;color:var(--c-ink)}
+  #bl .focus p{margin:0;font-size:14px;color:var(--c-ink,var(--ink));line-height:1.55}
+  #bl .reentry,#bl .safety{display:flex;gap:11px;align-items:flex-start;border-radius:12px;padding:12px 13px;margin-bottom:14px}
+  #bl .reentry{background:var(--blue-bg)}
+  #bl .reentry .ric{flex:0 0 auto;color:var(--blue-ink);margin-top:1px}
+  #bl .reentry p{margin:0;font-size:12.5px;color:var(--blue-ink);line-height:1.5}
+  #bl .safety{background:var(--warn-bg);border:1px solid var(--warn-line);margin-bottom:20px}
+  #bl .safety .shd{flex:0 0 auto;color:var(--warn-ink);margin-top:1px}
+  #bl .safety p{margin:0;font-size:12.5px;color:var(--warn-ink);line-height:1.5}
+  #bl .reentry b,#bl .safety b{font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:11px}
+  #bl .sec{margin-bottom:22px}
+  #bl .seclabel{display:flex;align-items:center;gap:8px;margin:0 2px 6px}
+  #bl .seclabel .sic{color:var(--c-ink,var(--ink))}
+  #bl .seclabel b{font-size:12.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink)}
+  #bl .secmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 2px 12px;font-size:12px;color:var(--ink-2);font-weight:500}
+  #bl .struct{display:inline-flex;align-items:center;gap:5px;background:var(--c-bg,var(--rest-bg));color:var(--c-ink,var(--rest-ink));
+    padding:4px 9px;border-radius:7px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+  #bl .ex{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px;margin-bottom:10px;box-shadow:var(--shadow)}
+  #bl .slot{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:var(--c-bg,var(--rest-bg));border:1.5px solid var(--c,var(--rest));
+    color:var(--c-ink,var(--ink));font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  #bl .exbody{flex:1 1 auto;min-width:0}
+  #bl .exhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  #bl .exname{font-size:15.5px;font-weight:600;letter-spacing:-.2px;line-height:1.25}
+  #bl .exrx{flex:0 0 auto;font-size:14px;font-weight:700;color:var(--c-ink,var(--ink));text-align:right;line-height:1.3;max-width:46%}
+  #bl .exsetup{display:inline-flex;align-items:center;gap:6px;margin-top:7px;font-size:11.5px;font-weight:600;color:var(--ink-2);
+    background:var(--surface-2);border-radius:7px;padding:4px 9px}
+  #bl .exsetup .si{color:var(--ink-3);display:flex}
+  #bl .exdesc{font-size:13px;color:var(--ink-2);line-height:1.55;margin:9px 0 0}
+  #bl .exbtns{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+  #bl .btn{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--ink-2);text-decoration:none;
+    border:1px solid var(--line);border-radius:9px;padding:7px 11px;background:var(--surface-2);cursor:pointer}
+  #bl .btn:active{opacity:.6}
+  #bl .btn .pl{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:4px;background:#ff0000;color:#fff}
+  #bl .btn.on{background:var(--c-bg);color:var(--c-ink);border-color:transparent}
+  #bl .swaptag{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:10.5px;font-weight:700;letter-spacing:.04em;
+    text-transform:uppercase;background:var(--c-bg);color:var(--c-ink);border-radius:6px;padding:3px 8px}
+  #bl .setnote{font-size:12.5px;color:var(--ink-2);line-height:1.5;margin:10px 0 0}
+  #bl .setnote b{color:var(--ink);font-weight:700}
+  #bl .chips{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:12px}
+  #bl .chip{background:var(--c-bg);border-radius:9px;padding:7px 2px;text-align:center}
+  #bl .chip .r{font-size:15px;font-weight:700;color:var(--c-ink);line-height:1}
+  #bl .chip .p{font-size:9.5px;font-weight:600;color:var(--c-ink);opacity:.72;margin-top:3px}
+  #bl .chip .lbl{font-size:8px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--c-ink);opacity:.55;margin-top:3px}
+  #bl .ab h2{font-size:20px;font-weight:700;letter-spacing:-.4px;margin:24px 0 8px}
+  #bl .ab h2:first-child{margin-top:6px}
+  #bl .ab p{font-size:14px;color:var(--ink-2);line-height:1.65;margin:0 0 12px}
+  #bl .ab .lead{font-size:15px;color:var(--ink)}
+  #bl .ab b{color:var(--ink);font-weight:600}
+  #bl .ab .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 17px;margin-bottom:14px;box-shadow:var(--shadow)}
+  #bl .ab ul{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+  #bl .ab li{font-size:13.5px;color:var(--ink-2);line-height:1.55;padding-left:22px;position:relative}
+  #bl .ab li::before{content:"";position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--blue)}
+  #bl .ab .rule li::before{background:var(--warn-ink)}
+  #bl .legend{display:flex;flex-wrap:wrap;gap:10px 14px;margin:2px 0 6px}
+  #bl .lg{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;color:var(--ink-2)}
+  #bl .lg .lgi{display:flex}
+</style>
+
+<div id="bl">
+  <div id="stack">
+    <div class="page" id="rootpage"></div>
+    <div class="scrim" id="scrim"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var BASE=new Date(2026,6,13);
+  var WEEKS=["Jul 13–19","Jul 20–26","Jul 27–Aug 2","Aug 3–9"];
+  var DOW=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var P={
+    info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+    dumbbell:'<path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12"/>',
+    pulse:'<path d="M3 12h4l3 8 4-16 3 8h4"/>',
+    leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 22 17 7"/>',
+    moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>',
+    sunrise:'<path d="M12 2v6M5.6 8.6l1.4 1.4M2 16h4M18 16h4M17 10l1.4-1.4M8 16a4 4 0 0 1 8 0M2 20h20"/>',
+    zap:'<path d="M13 2 4 14h8l-1 8 9-12h-8l1-8Z"/>',
+    layers:'<path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/>',
+    flame:'<path d="M12 2c3 4 5 6 5 9a5 5 0 0 1-10 0c0-1.6.8-3 2-4 .3 1.2 1.2 2 2.5 2C10.4 8 11 5 12 2Z"/>',
+    hex:'<path d="M12 2l9 5v10l-9 5-9-5V7Z"/>',
+    chevR:'<path d="M9 6l6 6-6 6"/>',
+    chevL:'<path d="M15 6l-6 6 6 6"/>',
+    shield:'<path d="M12 2 4 5v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5Z"/>',
+    repeat:'<path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/>',
+    rows:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+    play:'<path d="M8 5v14l11-7Z"/>',
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    swap:'<path d="M16 3l4 4-4 4M20 7H5"/><path d="M8 21l-4-4 4-4M4 17h15"/>',
+    gauge:'<path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M13.4 10.6 19 5"/><path d="M4 20a9 9 0 1 1 16 0"/>'
+  };
+  function ico(n,s,fill){s=s||18;var f=fill?'currentColor':'none';var sw=fill?'0':'2';
+    return '<svg viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="'+f+'" stroke="currentColor" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+P[n]+'</svg>';}
+  function yt(q){return "https://www.youtube.com/results?search_query="+encodeURIComponent(q);}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+  var SWAP={};
+  try{ SWAP=JSON.parse(localStorage.getItem("tr_swap")||"{}"); }catch(e){ SWAP={}; }
+  function saveSwap(){ try{ localStorage.setItem("tr_swap",JSON.stringify(SWAP)); }catch(e){} }
+
+  var SIX={
+    w:[
+      [[10,20],[8,45],[6,50],[6,55],[6,55],[6,60]],
+      [[10,20],[8,50],[6,55],[6,60],[6,65],[6,70]],
+      [[10,20],[8,50],[6,60],[6,65],[6,70],[6,72.5]],
+      [[10,20],[8,50],[6,60],[6,65],[6,72.5],[6,75]]
+    ],
+    note:"Six sets, ascending weight. The early sets are warm-ups; the last two are the money sets — hard, but always leave clean reps in the tank. Never grind a max: grinding makes you clench and brace, and that pulls on the shoulder."
+  };
+  function e(n,q,d,p,setup,alt){return {name:n,q:q,d:d,p:p,setup:setup,alt:alt};}
+
+  var A_LEGPRESS={name:"Leg Press",q:"leg press machine how to",d:"Feet mid-platform, shoulder-width. Push through your whole foot and stop just short of locking your knees. Same quad-and-glute job as the belt squat, with your torso supported and the shoulder out of it.",setup:"Feet mid · 2s down"};
+  var A_LEGPRESS_HIGH={name:"Leg Press (feet high)",q:"leg press feet high glutes",d:"Feet high on the platform, shoulder-width, pushing from the heels. That foot position shifts the work to your glutes and hamstrings — the same target as the hip thrust.",setup:"Feet high · heels drive"};
+  var A_SISSY={name:"Assisted Sissy Squat",q:"assisted sissy squat",d:"Rail in your good hand, lean back on your toes and bend the knees. A deep burn down the front of your thighs — a bodyweight stand-in for the leg extension.",setup:"Slow · 3s down"};
+  var A_LYINGCURL={name:"Lying Leg Curl",q:"lying leg curl machine",d:"Face-down hamstring curl, chest supported, arms just resting. Same hamstring job as the seated version.",setup:"1s up · 2s down"};
+  var A_SEATEDCURL={name:"Seated Leg Curl",q:"seated leg curl machine",d:"Seated hamstring curl, torso strapped in. Same hamstring job as the lying version.",setup:"1s up · 2s down"};
+  var A_SIDEABD={name:"Side-Lying Hip Abduction",q:"side lying hip abduction exercise",d:"Lie on your side, lift the top leg straight up and lower it slowly. A burn on the outside of your hip — the abductor machine's job with zero equipment.",setup:"Slow · 2s down"};
+  var A_SUMO={name:"Bodyweight Sumo Squat",q:"bodyweight sumo squat",d:"Wide stance, toes turned out, sit straight down and squeeze up. Hits the inner thighs — the same muscles the adductor machine trains.",setup:"2s down · squeeze up"};
+  var A_SLBRIDGE={name:"Single-Leg Glute Bridge",q:"single leg glute bridge",d:"One foot planted, other leg straight out, drive your hips up off the floor. A hard glute burn one side at a time — the back extension's job with no bench.",setup:"2s hold at top"};
+  var A_CALFSTEP={name:"Bodyweight Calf Raise (step)",q:"bodyweight calf raise on step",d:"Balls of your feet on a step, good hand on a rail for balance. Rise up tall, then lower slowly below the step for a full stretch.",setup:"1s up · 3s down"};
+  var A_STAIR={name:"Stair Climber",q:"stair climber cardio machine",d:"Steady climbing at a conversational pace. Rest your good hand lightly on the rail — never grip hard or lean your weight on it.",setup:"60 steps/min · steady"};
+  var A_STAIRINT={name:"Stair Climber Intervals",q:"stair climber interval training",d:"30 seconds of fast climbing, then 90 seconds slow. Legs do all the work; your good hand rests lightly on the rail.",setup:"Fast: 90 steps/min · Easy: 45"};
+
+  var DAYS=[
+    { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower A", sub:"Quad-dominant", tag:"For Weight", est:"60 min",
+      focus:"Heavy quad day. Legs load hard through a hip belt so your shoulder stays completely out of it. You should leave feeling like your thighs did real work — not maxed out.",
+      secs:[
+        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+          ex:[
+            e("Bodyweight Squat","bodyweight air squat form","Feet shoulder-width, sit down and drive up. No weight — this just warms the knees, hips and quads before you load them.","15","Slow · full depth"),
+            e("Glute Bridge","bodyweight glute bridge","Drive your hips up and squeeze your glutes hard at the top. Primes the muscles you're about to train so the big lift feels stronger.","15","2s squeeze at top"),
+            e("Assisted Sissy Squat","assisted sissy squat","Hold a rail with your good hand, lean back on your toes and bend your knees. A deep stretch-burn down the front of your thighs.","10","3s down")
+          ]},
+        {l:"Main strength",ic:"dumbbell",struct:"six",rest:"2 min",slots:["B"],
+          ex:[e("Belt Squat","belt squat machine how to","Your biggest muscle-builder of the week, loaded through a hip belt so your arms and shoulder do nothing. The single highest-value thing you can do to hold muscle before surgery.","","2s down · drive up",A_LEGPRESS)]},
+        {l:"Auxiliary",ic:"layers",struct:"superset",rounds:[2,3,3,4],rest:"90s",slots:["C1","C2","C3"],
+          ex:[
+            e("Leg Extension","leg extension machine proper form","Isolates the quads with your torso fully supported. Expect a deep burn in the front of your thighs on the last few reps.",["10","12","14","12"],"1s up · 2s down",A_SISSY),
+            e("Bodyweight Bulgarian Split Squat","bodyweight bulgarian split squat","Back foot on a bench, good-hand on a rail, drop straight down. Brutal in the best way, one leg at a time. Bodyweight and the long range is plenty.",["6 / leg","8 / leg","10 / leg","10 / leg · 2s pause"],"2s down"),
+            e("Seated Leg Curl","seated leg curl machine","Curl your heels down to train the hamstrings, torso strapped in. Balances all the quad work so your legs stay healthy.",["10","12","14","12"],"1s up · 2s down",A_LYINGCURL)
+          ]},
+        {l:"Cash-out",ic:"flame",struct:"straight",rest:"60s",slots:["D1","D2"],
+          ex:[
+            e("Seated Calf Raise","seated calf raise machine","Seated so the pad rests on your knees, never your shoulders. Push through the balls of your feet and pause at the top.",["3 sets × 12","3 sets × 15","4 sets × 15","4 sets × 20"],"2s pause at top",A_CALFSTEP),
+            e("Reverse Crunch","reverse crunch exercise","Lie back, arms flat and relaxed at your sides, curl your knees toward your chest with your lower abs. Core work that never touches the shoulder.","3 sets × 15","Slow · no swinging")
+          ]},
+        {l:"Finisher",ic:"pulse",struct:"single",meta:"Fat-burn walk",slots:["E"],
+          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close the session — free calorie burn while your legs cool down. Arms relaxed at your sides, don't hold the rails.","12:00","8% incline · 3.2 mph",A_STAIR)]}
+      ]},
+
+    { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning", sub:"Zone 2 + core", tag:"For Time", est:"60 min",
+      focus:"Your easy engine day. A steady Zone 2 pace — you could just barely hold a conversation. This is where fat loss and heart health quietly happen. Never gassed.",
+      secs:[
+        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+          ex:[
+            e("Easy Incline Walk","treadmill warm up walk","Three easy minutes to get blood into your legs and lift your heart rate gently. Light and loose, not work.","3:00","5% incline · 3.0 mph",A_STAIR),
+            e("Bodyweight Lateral Lunge","bodyweight lateral lunge","Step wide to one side, sit into that hip, push back to center. Opens the hips and inner thighs and wakes up the muscles that stabilize your knees sideways.","10 / side","Controlled · full sit"),
+            e("Dead-Bug (legs only)","dead bug exercise legs only","On your back, arms relaxed, slowly extend one leg at a time while keeping your lower back flat. Teaches your midsection to brace.","12","Slow · back stays flat")
+          ]},
+        {l:"Main",ic:"pulse",struct:"single",meta:"Steady state · Zone 2",slots:["B"],
+          ex:[e("Incline Treadmill Walk","incline treadmill walk zone 2","Conversational, nose-breathing pace — you could talk in full sentences but wouldn't want to sing. Arms relaxed and free; don't grip the rails. This is your biggest calorie burn of the week.",["45:00","48:00","50:00","52:00"],"10% incline · 3.2 mph",A_STAIR)]},
+        {l:"Core",ic:"hex",struct:"superset",rounds:[2,2,2,2],rest:"45s",slots:["C1","C2"],
+          ex:[
+            e("Lying Straight-Leg Raise","lying straight leg raise","Hands under your glutes, lift straight legs to vertical and lower slowly — the slow lower is where the lower-ab burn lives.",["10","12","15","15"],"3s down"),
+            e("Flutter Kicks","flutter kicks core","Legs straight, small fast up-down kicks, hands tucked under your glutes. A steady burn low in the abs.",["25s","30s","40s","45s"],"Fast · small range")
+          ]}
+      ]},
+
+    { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower B", sub:"Posterior chain / glute", tag:"For Weight", est:"60 min",
+      focus:"Heavy glute and hamstring day — the back of your legs. The hip-thrust machine loads your posterior chain hard with zero shoulder involvement. Strong glutes are your engine for walking, stairs, and eventually the court.",
+      secs:[
+        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+          ex:[
+            e("Bodyweight Hip Hinge","bodyweight hip hinge pattern","Push your hips straight back with soft knees, hands sliding down your thighs, chest down. Grooves the hinge pattern — no weight, no grip.","12","Slow · feel the hamstrings"),
+            e("Frog Pump","frog pump glute exercise","On your back, soles together and knees out, pump your hips up and squeeze. Switches the glutes fully on before the heavy work.","20","Fast pumps · hard squeeze"),
+            e("Bodyweight Squat","bodyweight air squat form","Feet shoulder-width, sit down and drive up. Warms the knees and hips before you load them.","15","Slow · full depth")
+          ]},
+        {l:"Main strength",ic:"dumbbell",struct:"six",rest:"2 min",slots:["B"],
+          ex:[e("Machine Hip Thrust","machine hip thrust glute drive","Your heavy glute and hamstring builder — the lever pad sits across your hips, so it loads the whole back of your legs with no shoulder involvement. Drive through your heels.","","2s down · 1s squeeze",A_LEGPRESS_HIGH)]},
+        {l:"Auxiliary",ic:"layers",struct:"superset",rounds:[2,3,3,4],rest:"90s",slots:["C1","C2","C3"],
+          ex:[
+            e("Lying Leg Curl","lying leg curl machine","Face-down hamstring curl, chest supported, arms just resting. More hamstring volume to balance the glute work.",["10","12","14","12"],"1s up · 2s down",A_SEATEDCURL),
+            e("45° Back Extension","45 degree back extension hyperextension","Hips on the pad, arms crossed on your chest (no weight), rise until straight and squeeze your glutes. Great for posture while you're deconditioned elsewhere.",["10","12","15","15"],"2s squeeze at top",A_SLBRIDGE),
+            e("Hip Abductor Machine","hip abductor machine glutes","Push your knees outward against the pads, leaning forward slightly to hit the upper glutes. Builds the stabilizers that keep hips and knees healthy.",["12","15","18","15"],"Lean forward · 2s hold",A_SIDEABD)
+          ]},
+        {l:"Cash-out",ic:"flame",struct:"straight",rest:"60s",slots:["D1","D2"],
+          ex:[
+            e("Leg-Press Calf Press","leg press calf raise","Feet low on the leg-press platform, push through the balls of your feet for long, controlled calf reps. Torso fully supported.",["3 sets × 12","3 sets × 15","4 sets × 15","4 sets × 20"],"3s down · full stretch",A_CALFSTEP),
+            e("Legs-Only Dead-Bug","dead bug exercise","On your back, arms at your sides, slowly extend one leg then the other, lower back flat. Deep-core bracing that protects your back under load.","3 sets × 12 / leg","Slow · back stays flat")
+          ]},
+        {l:"Finisher",ic:"pulse",struct:"single",meta:"Fat-burn walk",slots:["E"],
+          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close the session — free calorie burn while your legs cool down. Arms relaxed at your sides.","12:00","8% incline · 3.2 mph",A_STAIR)]}
+      ]},
+
+    { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning", sub:"Intervals + core", tag:"For Reps", est:"60 min",
+      focus:"Short and intense, then a long easy walk. The hard 30-second bursts should have you breathing heavy by the end of each one — legs drive it, arm stays relaxed.",
+      secs:[
+        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+          ex:[
+            e("Easy Bike Spin","stationary bike warm up","Three easy minutes on an upright bike to warm the legs and raise your heart rate before the hard efforts.","3:00","70 rpm · light resistance"),
+            e("Reverse Lunge to Box","reverse lunge to box","Step back and tap a knee toward a box behind you, good-hand rail nearby. Opens the hips and preps single-leg control.","8 / leg","Controlled · light tap"),
+            e("Glute Bridge","bodyweight glute bridge","Hips up, squeeze the glutes. Primes the posterior chain so your intervals feel powerful.","15","2s squeeze at top")
+          ]},
+        {l:"Main",ic:"pulse",struct:"single",meta:"Intervals",slots:["B"],
+          ex:[e("Upright Bike Sprints","stationary bike interval sprints","30 seconds hard, 90 seconds easy, on a standard upright bike. Push the hard efforts until you're breathing heavy. Keep your right arm relaxed on the bars — legs do all the work.",["6 × 30s / 90s","8 × 30s / 90s","9 × 30s / 90s","10 × 30s / 90s"],"Hard: 90 rpm, heavy · Easy: 60 rpm, light",A_STAIRINT)]},
+        {l:"Steady",ic:"pulse",struct:"single",meta:"Zone 2 walk",slots:["C"],
+          ex:[e("Incline Treadmill Walk","incline treadmill walk zone 2","Easy conversational walk after the intervals. This is where most of the day's calorie burn actually comes from. Arms relaxed and free.","25:00","8% incline · 3.2 mph",A_STAIR)]},
+        {l:"Core",ic:"hex",struct:"superset",rounds:[2,2,3,3],rest:"45s",slots:["D1","D2"],
+          ex:[
+            e("Reverse Crunch","reverse crunch exercise","Arms flat at your sides, curl your knees to your chest with the lower abs. Low-belly burn, no shoulder.",["10","12","15","18"],"Slow · no swinging"),
+            e("Bicycle Crunch","bicycle crunch abs","Alternate elbow toward opposite knee — keep your hands at your sides, not behind your head (behind-the-head is a bad shoulder position for you).",["25s","30s","40s","45s"],"Steady · controlled")
+          ]}
+      ]},
+
+    { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower C", sub:"Unilateral / hypertrophy", tag:"For Reps", est:"60 min",
+      focus:"A pump day, not a heavy day — controlled reps and higher volume chasing a deep quad-and-glute burn. Lighter on the joints than Monday and Wednesday, and it rounds out the week.",
+      secs:[
+        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+          ex:[
+            e("Bodyweight Lateral Lunge","bodyweight lateral lunge","Step wide to one side, sit into that hip, push back to center. Opens the hips and inner thighs.","10 / side","Controlled · full sit"),
+            e("Assisted Sissy Squat","assisted sissy squat","Rail in your good hand, lean back and bend the knees for a big quad stretch.","10","3s down"),
+            e("Glute Bridge","bodyweight glute bridge","Hips up, squeeze. Switches the glutes on for the volume ahead.","20","2s squeeze at top")
+          ]},
+        {l:"Main",ic:"dumbbell",struct:"straight",meta:"Quality volume",rest:"90s",slots:["B1","B2"],
+          ex:[
+            e("Leg Press","leg press machine how to","Controlled reps chasing a deep quad-and-glute pump — not a heavy top set. Torso supported, shoulder out of it.",["3 sets × 12","4 sets × 14","4 sets × 15","5 sets × 12"],"Feet mid · 2s down"),
+            e("Bodyweight Walking Lunge","bodyweight walking lunge","Continuous lunges with just your bodyweight, a rail within reach. Keeps both legs even and strong.",["3 sets × 8 / leg","3 sets × 12 / leg","3 sets × 14 / leg","3 sets × 16 / leg"],"Long stride · knee to floor")
+          ]},
+        {l:"Auxiliary",ic:"layers",struct:"superset",rounds:[2,3,3,3],rest:"90s",slots:["C1","C2","C3"],
+          ex:[
+            e("Leg Extension (1.5 reps)","leg extension 1.5 reps","Full rep, then a half rep, then back up — that's one. Doubles the time your quads are under tension for a serious burn.",["8","10","10","10"],"Full + half = 1 rep",A_SISSY),
+            e("Seated Leg Curl","seated leg curl machine","Hamstring curl, torso supported. Keeps the back of your legs balanced with all the quad volume.","15","1s up · 2s down",A_LYINGCURL),
+            e("Hip Adductor Machine","hip adductor machine inner thigh","Squeeze your knees together against the pads for the inner thighs — the muscles the abductor misses.",["12","15","18","20"],"2s squeeze",A_SUMO)
+          ]},
+        {l:"Cash-out",ic:"flame",struct:"straight",rest:"60s",slots:["D1"],
+          ex:[e("Seated Calf Raise","seated calf raise machine","Seated, pad on the knees, push through the balls of your feet and squeeze at the top.","3 sets × 15","2s pause at top",A_CALFSTEP)]},
+        {l:"Finisher",ic:"pulse",struct:"single",meta:"Fat-burn walk",slots:["E"],
+          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close out the week's lifting. Arms relaxed at your sides.","15:00","8% incline · 3.2 mph",A_STAIR)]}
+      ]},
+
+    { t:"rest", cls:"t-rest", ico:"moon", title:"Rest day", sub:"Full recovery", tag:"Rest", est:"",
+      focus:"Nothing programmed today, on purpose. Muscle is built and repaired on rest days, not just training days — this is when the work you've put in actually sticks. Move gently if you like (a walk toward your 10k steps), but no training. Sleep well and eat your protein.",
+      secs:[]},
+
+    { t:"rec", cls:"t-rec", ico:"leaf", title:"Active recovery", sub:"Zone 2 + mobility", tag:"Recovery", est:"55 min",
+      focus:"A light, restorative day. Easy cardio to flush the legs, a few minutes of mobility to stay loose, and gentle core. Should feel like active rest — never hard. Hit your 10k steps.",
+      secs:[
+        {l:"Main",ic:"pulse",struct:"single",meta:"Easy cardio · Zone 2",slots:["A"],
+          ex:[e("Zone 2 Incline Walk","zone 2 incline treadmill walk","An easy incline walk to flush the legs and add gentle calorie burn. Restorative, never hard — you should be able to hold a full conversation.",["40:00","42:00","45:00","45:00"],"8% incline · 3.0 mph",A_STAIR)]},
+        {l:"Mobility",ic:"leaf",struct:"single",meta:"Mobility",slots:["B"],
+          ex:[e("Lower-Body Mobility Flow","lower body mobility routine","Hip openers, 90/90 hip rotations, ankle rocks, and a couch stretch — roughly 2 minutes per position. Skip anything that pulls on the shoulder.","8 min","~2 min per position")]},
+        {l:"Core",ic:"hex",struct:"superset",rounds:[2,2,2,2],rest:"45s",slots:["C1","C2"],
+          ex:[
+            e("Lying Straight-Leg Raise","lying straight leg raise","Slow leg raises, hands under your glutes. Easy lower-ab work with no shoulder involvement.","12","3s down"),
+            e("Flutter Kicks","flutter kicks core","Small fast kicks, hands under your glutes. A light core finisher.","30s","Fast · small range")
+          ]}
+      ]}
+  ];
+  var SKIP={ t:"rest", cls:"t-rest", ico:"sunrise", title:"Starting tomorrow", sub:"Rest — begin Tuesday", tag:"Off", est:"",
+    focus:"You're kicking this block off on Tuesday, so today is a rest day. Coming off about 3 weeks without training, one more easy day before you start is a feature, not a setback. Eat your protein, get your 10k steps, and hit it fresh tomorrow.",
+    secs:[] };
+  function dayData(w,i){ if(w===0&&i===0)return SKIP; return DAYS[i]; }
+
+  var week=0, curDay=null;
+  var todayIdx=(function(){var n=new Date();var t=new Date(n.getFullYear(),n.getMonth(),n.getDate());var d=Math.round((t-BASE)/86400000);return (d>=0&&d<28)?d:-1;})();
+  if(todayIdx>=0)week=Math.floor(todayIdx/7);
+  function dateFor(w,d){var x=new Date(BASE);x.setDate(BASE.getDate()+w*7+d);return x;}
+
+  var bl=document.getElementById("bl"),stack=document.getElementById("stack"),rootpage=document.getElementById("rootpage"),scrim=document.getElementById("scrim");
+
+  function daysListHTML(w){
+    var h='';
+    for(var i=0;i<7;i++){
+      var day=dayData(w,i),dt=dateFor(w,i),isT=(w*7+i===todayIdx),rest=(day.t==="rest");
+      var sub=esc(day.sub)+(day.est?' · '+day.est:'');
+      h+='<button class="day '+day.cls+(rest?" rest":"")+'" data-d="'+i+'">'+
+        '<div class="daydate"><div class="dow">'+esc(DOW[i])+'</div><div class="dnum num">'+dt.getDate()+'</div></div>'+
+        '<div class="daymid"><div class="daytitle">'+esc(day.title)+'</div><div class="daysub">'+sub+'</div></div>'+
+        '<div class="dayright">'+(isT?'<span class="todaychip">Today</span>':'')+
+        '<span class="tag">'+ico(day.ico,13)+esc(day.tag)+'</span>'+
+        (rest?'':'<span class="chev">'+ico("chevR",20)+'</span>')+'</div></button>';
+    }
+    return h;
+  }
+  function scheduleHTML(){
+    var h='<div class="view"><div class="homehdr"><h1 class="apptitle">Training</h1>'+
+      '<button class="aboutlink" id="aboutlink"><span class="ilead">'+ico("info",16)+'</span>Pre-Op Training<span class="itrail">'+ico("chevR",15)+'</span></button></div>'+
+      '<div class="weekwrap" role="tablist" id="weekwrap">';
+    for(var w=0;w<4;w++)h+='<button class="weekpill" role="tab" aria-selected="'+(w===week)+'" data-w="'+w+'">Week '+(w+1)+'<small class="num">'+WEEKS[w]+'</small></button>';
+    h+='</div><div class="days" id="dayslist">'+daysListHTML(week)+'</div></div>';
+    return h;
+  }
+  function chipsHTML(){
+    var sets=SIX.w[week],h='<div class="chips">';
+    for(var i=0;i<sets.length;i++)h+='<div class="chip"><div class="r num">'+sets[i][0]+'</div><div class="p num">'+sets[i][1]+'%</div><div class="lbl">'+(i===0?"Warm":i>=4?"Work":"Build")+'</div></div>';
+    return h+'</div>';
+  }
+  function exHTML(base,slot,six,key){
+    var on=!!SWAP[key], alt=base.alt, ex=base;
+    if(on&&alt){ ex={name:alt.name,q:alt.q,d:alt.d,p:(alt.p||base.p),setup:(alt.setup||base.setup)}; }
+    var h='<div class="ex"><div class="slot">'+esc(slot)+'</div><div class="exbody">';
+    if(six){
+      h+='<div class="exhead"><div class="exname">'+esc(ex.name)+'</div></div>';
+      if(on)h+='<div class="swaptag">'+ico("swap",11)+'Swapped</div>';
+      h+=chipsHTML()+'<p class="setnote"><b>10, 8, 6, 6, 6, 6</b> — reps per set, ascending weight.</p>';
+      if(ex.setup)h+='<div class="exsetup"><span class="si">'+ico("gauge",13)+'</span>'+esc(ex.setup)+'</div>';
+      h+='<p class="exdesc">'+esc(ex.d)+'</p><p class="setnote">'+esc(SIX.note)+'</p>';
+    } else {
+      var p=Array.isArray(ex.p)?ex.p[week]:ex.p;
+      h+='<div class="exhead"><div class="exname">'+esc(ex.name)+'</div><div class="exrx num">'+esc(p)+'</div></div>';
+      if(on)h+='<div class="swaptag">'+ico("swap",11)+'Swapped</div>';
+      if(ex.setup)h+='<div class="exsetup"><span class="si">'+ico("gauge",13)+'</span>'+esc(ex.setup)+'</div>';
+      h+='<p class="exdesc">'+esc(ex.d)+'</p>';
+    }
+    h+='<div class="exbtns"><a class="btn" href="'+yt(ex.q)+'" target="_blank" rel="noopener"><span class="pl">'+ico("play",11,true)+'</span>How to do it</a>';
+    if(alt)h+='<button class="btn'+(on?' on':'')+'" data-swap="'+key+'">'+ico("swap",14)+(on?'Use '+esc(base.name):'No machine? Swap')+'</button>';
+    h+='</div></div></div>';
+    return h;
+  }
+  function structMeta(sec){
+    if(sec.struct==="superset"){
+      var r=sec.rounds[week],chain=sec.slots.join(" → ");
+      if(r===1)return '<div class="struct">'+ico("repeat",12)+'Circuit</div><span>'+chain+' straight through, once · no rest</span>';
+      return '<div class="struct">'+ico("repeat",12)+'Superset</div><span>'+chain+' back-to-back with no rest, then rest '+esc(sec.rest)+' · '+r+' rounds total</span>';
+    }
+    if(sec.struct==="six")return '<div class="struct">'+ico("rows",12)+'Straight sets</div><span>6 sets · rest '+esc(sec.rest)+' between sets</span>';
+    if(sec.struct==="straight")return '<div class="struct">'+ico("rows",12)+'Straight sets</div><span>finish each move before the next · rest '+esc(sec.rest)+' between sets</span>';
+    if(sec.struct==="single")return '<div class="struct">'+ico("clock",12)+esc(sec.meta||'')+'</div>';
+    return '';
+  }
+  function dayHTML(w,i){
+    var day=dayData(w,i),h='<div class="view '+day.cls+'">';
+    h+='<div class="focus"><span class="fic">'+ico(day.ico,20)+'</span><p>'+esc(day.focus)+'</p></div>';
+    if(w===0&&day.secs.length)h+='<div class="reentry"><span class="ric">'+ico("sunrise",18)+'</span><p><b>Re-entry week&nbsp;&nbsp;</b>You\'re back after ~3 weeks off, so Week 1 is deliberately lighter — fewer sets, easier weights than you think, and 3–4 reps in reserve on everything (not the usual 2). Expect some soreness the first few days; it fades fast. Volume steps up next week.</p></div>';
+    if(day.t!=="rest")h+='<div class="safety"><span class="shd">'+ico("shield",18)+'</span><p><b>Shoulder rule&nbsp;&nbsp;</b>Right arm does nothing — no weight held, no hard grip, no bracing. Nothing overhead or behind the body. Any ache or instability in the shoulder → stop that movement.</p></div>';
+    for(var s=0;s<day.secs.length;s++){var sec=day.secs[s];
+      h+='<div class="sec"><div class="seclabel"><span class="sic">'+ico(sec.ic,16)+'</span><b>'+esc(sec.l)+'</b></div><div class="secmeta">'+structMeta(sec)+'</div>';
+      for(var x=0;x<sec.ex.length;x++)h+=exHTML(sec.ex[x],sec.slots[x],sec.struct==="six","d"+i+"s"+s+"e"+x);
+      h+='</div>';}
+    return h+'</div>';
+  }
+  function aboutHTML(){
+    return '<div class="view ab t-strength">'+
+      '<h2>Training</h2>'+
+      '<p class="lead">A four-week block for the weeks before your shoulder surgery. It keeps your legs strong, your conditioning sharp, and your calorie burn high — all without touching the shoulder your surgeon told you to protect. Every session runs about an hour.</p>'+
+      '<div class="card"><p style="margin:0 0 10px;color:var(--ink);font-weight:600;font-size:14px">The one rule this whole program is built around</p><p style="margin:0">Your surgeon said protect the shoulder — no loading. So the right arm does <b>nothing</b>: no weights, no hard grip, no bracing, nothing overhead or behind the body. Every lift here is chosen so your legs and hips work hard while that shoulder stays completely out of it.</p></div>'+
+      '<h2>What it\'s for</h2><ul>'+
+        '<li><b>Hold your muscle.</b> A calorie deficit with no training eats muscle. Hard leg work tells your body to keep it.</li>'+
+        '<li><b>Keep the cut moving.</b> Big-muscle leg training plus the walk finishers and 10k daily steps keep your burn high.</li>'+
+        '<li><b>Set up a faster comeback.</b> Going into surgery strong and conditioned makes the recovery on the other side smoother.</li></ul>'+
+      '<div class="card"><p style="margin:0 0 8px;color:var(--ink);font-weight:600;font-size:14px">Week 1 is a re-entry week</p><p style="margin:0">You\'re starting Tuesday, coming off about 3 weeks without training — so Monday is a rest day and Week 1 runs lighter on purpose: fewer sets, easier loads, and 3–4 reps in reserve. Doing too much on day one is how a comeback gets derailed. Full volume kicks in from Week 2.</p></div>'+
+      '<div class="card"><p style="margin:0 0 8px;color:var(--ink);font-weight:600;font-size:14px">No machine? Swap it.</p><p style="margin:0">Any exercise that needs a specific machine has a <b>Swap</b> button. Tap it and you get a shoulder-safe alternative that trains the same muscle — belt squat becomes leg press, hip-thrust machine becomes a high-foot leg press, the abductor machine becomes a floor exercise, and so on. Your choice is remembered.</p></div>'+
+      '<h2>The week at a glance</h2>'+
+      '<div class="legend">'+
+        '<span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("dumbbell",17)+'</span>Strength</span>'+
+        '<span class="lg"><span class="lgi" style="color:var(--heat)">'+ico("pulse",17)+'</span>Conditioning</span>'+
+        '<span class="lg"><span class="lgi" style="color:var(--rec)">'+ico("leaf",17)+'</span>Recovery</span>'+
+        '<span class="lg"><span class="lgi" style="color:var(--rest)">'+ico("moon",17)+'</span>Rest</span></div>'+
+      '<ul><li><b>Mon · Wed · Fri</b> — the three leg days (quad, glutes, then a lighter pump day). Each ends with a Zone 2 walk.</li>'+
+        '<li><b>Tue · Thu</b> — conditioning (easy Zone 2, then intervals + a steady walk).</li>'+
+        '<li><b>Sun</b> — active recovery and mobility. <b>Sat</b> — full rest.</li></ul>'+
+      '<h2>How to read a day</h2><p>Exercises are lettered like the Fort. A tag on each block tells you exactly how to run it:</p>'+
+      '<div class="legend"><span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("repeat",17)+'</span><b style="color:var(--ink);font-weight:600">Circuit</b> — go A1 → A2 → A3 straight through, once, no rest</span></div>'+
+      '<div class="legend"><span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("repeat",17)+'</span><b style="color:var(--ink);font-weight:600">Superset</b> — C1 → C2 → C3 back-to-back with no rest, then rest 90s and repeat</span></div>'+
+      '<div class="legend"><span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("rows",17)+'</span><b style="color:var(--ink);font-weight:600">Straight sets</b> — finish all sets of one move (resting between) before the next</span></div>'+
+      '<p>Every number is exact — sets, reps, rest, treadmill incline and speed, bike cadence, and lifting tempo. Nothing to guess at and nothing to choose between.</p>'+
+      '<h2>How it changes each week</h2><p>Same routine every week — the numbers climb from the light re-entry week. The main lifts follow <b>"Six the Hard Way"</b>: six sets of 10, 8, 6, 6, 6, 6 at rising weight, resting 2 minutes between sets. Pick a top-set weight in Week 1 that\'s a comfortable 6 with 3–4 reps left — that\'s your reference to build from.</p>'+
+      '<div class="card rule"><p style="margin:0 0 10px;color:var(--warn-ink);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase">Safety rules — every session</p><ul class="rule">'+
+        '<li>Right arm does nothing — no weight, grip, or bracing through it.</li>'+
+        '<li>Leave clean reps in reserve. No max grinds (grinding = clenching = shoulder strain).</li>'+
+        '<li>No fall risk — a rail within reach for any single-leg work.</li>'+
+        '<li>Nothing overhead, behind the body, or hanging.</li>'+
+        '<li>Pain, tingle, or instability in the shoulder → stop that movement.</li></ul></div>'+
+      '<h2>Fuel it</h2><ul>'+
+        '<li><b>180 g protein a day</b> to hold muscle into the layoff.</li>'+
+        '<li>Keep your <b>cut calories</b> where they are — the leg volume plus steps keeps your burn high.</li>'+
+        '<li><b>Creatine</b> stays in. <b>Alcohol</b> near zero heading into surgery.</li></ul>'+
+      '<p style="font-size:12.5px;color:var(--ink-3);margin-top:16px">This block runs until your surgery date. One thing to confirm with your surgical team: that training legs on machines and doing leg-only cardio is fine with the shoulder fully unloaded.</p></div>';
+  }
+
+  function renderRoot(){
+    rootpage.innerHTML='<div class="navbar sched-nav" id="schednav"><div class="navtitle-sm">Training</div></div>'+
+      '<div class="scroll" id="rootscroll">'+scheduleHTML()+'</div>';
+    var sn=document.getElementById("schednav"),rs=document.getElementById("rootscroll");
+    rs.addEventListener("scroll",function(){ if(rs.scrollTop>34)sn.classList.add("solid"); else sn.classList.remove("solid"); });
+    document.getElementById("aboutlink").onclick=function(){openDetail("about");};
+    wireDays();
+    document.querySelectorAll("#weekwrap .weekpill").forEach(function(p){p.onclick=function(){
+      week=+p.dataset.w;
+      document.querySelectorAll("#weekwrap .weekpill").forEach(function(q){q.setAttribute("aria-selected",+q.dataset.w===week);});
+      document.getElementById("dayslist").innerHTML=daysListHTML(week); wireDays();
+    };});
+  }
+  function wireDays(){
+    document.querySelectorAll("#dayslist .day").forEach(function(cd){cd.onclick=function(){openDetail("day",+cd.dataset.d);};});
+  }
+  function wireSwaps(pg){
+    pg.querySelectorAll("[data-swap]").forEach(function(b){b.onclick=function(){
+      var k=b.dataset.swap; if(SWAP[k])delete SWAP[k]; else SWAP[k]=1; saveSwap();
+      var sc=pg.querySelector(".scroll"), y=sc.scrollTop;
+      sc.innerHTML=dayHTML(week,curDay); wireSwaps(pg); sc.scrollTop=y;
+    };});
+  }
+
+  var detail=null, dragging=false, startX=0, W=0;
+  function makeDetail(kind,i){
+    var title, body;
+    if(kind==="day"){ var day=dayData(week,i),dt=dateFor(week,i);
+      title=esc(DOW[i])+' · '+esc(day.title)+'<small>Week '+(week+1)+' · '+esc(dt.toLocaleDateString(undefined,{month:"short",day:"numeric"}))+(day.est?' · '+day.est:'')+'</small>';
+      body=dayHTML(week,i);
+    } else { title="About"; body=aboutHTML(); }
+    var pg=document.createElement("div"); pg.className="page";
+    pg.innerHTML='<div class="navbar"><button class="backbtn">'+ico("chevL",22)+'Back</button><div class="navtitle">'+title+'</div></div>'+
+      '<div class="scroll">'+body+'</div><div class="edge"></div>';
+    pg.querySelector(".backbtn").onclick=function(){closeDetail();};
+    if(kind==="day")wireSwaps(pg);
+    attachSwipe(pg.querySelector(".edge"));
+    return pg;
+  }
+  function openDetail(kind,i){
+    if(detail)return;
+    curDay=(kind==="day")?i:null;
+    detail=makeDetail(kind,i);
+    detail.style.transform="translateX(100%)"; detail.style.transition="none";
+    stack.appendChild(detail); detail.offsetWidth;
+    detail.style.transition=""; detail.style.transform="translateX(0)";
+    rootpage.style.transform="translateX(-24%)"; scrim.style.opacity=".12";
+  }
+  function closeDetail(){
+    if(!detail)return;
+    var d=detail; detail=null;
+    d.style.transform="translateX(100%)"; rootpage.style.transform=""; scrim.style.opacity="0";
+    var done=function(){ if(d.parentNode)d.parentNode.removeChild(d); };
+    d.addEventListener("transitionend",done); setTimeout(done,420);
+  }
+  function setProg(px){
+    var p=Math.max(0,Math.min(1,px/W));
+    detail.style.transform="translateX("+Math.max(0,px)+"px)";
+    rootpage.style.transform="translateX("+(-24*(1-p))+"%)";
+    scrim.style.opacity=(0.12*(1-p)).toFixed(3);
+  }
+  function attachSwipe(edge){
+    edge.addEventListener("pointerdown",function(ev){
+      if(!detail)return; dragging=true; startX=ev.clientX; W=bl.clientWidth;
+      try{edge.setPointerCapture(ev.pointerId);}catch(e){}
+      detail.classList.add("dragging"); rootpage.classList.add("dragging"); scrim.classList.add("dragging");
+    });
+    edge.addEventListener("pointermove",function(ev){ if(dragging&&detail)setProg(ev.clientX-startX); });
+    var end=function(ev){
+      if(!dragging)return; dragging=false;
+      if(detail)detail.classList.remove("dragging");
+      rootpage.classList.remove("dragging"); scrim.classList.remove("dragging");
+      var dx=ev.clientX-startX;
+      if(detail&&dx>W*0.35)closeDetail();
+      else if(detail){ detail.style.transform="translateX(0)"; rootpage.style.transform="translateX(-24%)"; scrim.style.opacity=".12"; }
+    };
+    edge.addEventListener("pointerup",end); edge.addEventListener("pointercancel",end);
+  }
+
+  renderRoot();
+})();
+</script>
+
+</body>
+</html>
