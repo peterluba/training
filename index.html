@@ -128,13 +128,15 @@
   #bl .todaychip{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:6px;background:var(--ink);color:var(--bg)}
   #bl .day.rest{background:var(--surface-2);box-shadow:none;border-color:transparent}
   #bl .day.rest .daytitle{color:var(--ink-2)}
-  #bl .watch{display:flex;gap:11px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);
-    border-radius:12px;padding:12px 13px;margin-bottom:12px;box-shadow:var(--shadow)}
-  #bl .watch .wic{flex:0 0 auto;color:var(--c-ink,var(--ink));margin-top:2px}
-  #bl .wlabel{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
-  #bl .wtype{font-size:14px;font-weight:600;color:var(--ink);margin-top:3px;line-height:1.35}
-  #bl .wtype em{font-style:normal;font-weight:500;color:var(--ink-2)}
-  #bl .wnote{font-size:12px;color:var(--ink-2);line-height:1.5;margin-top:5px}
+  #bl .startcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
+  #bl .srow{display:flex;gap:11px;padding:12px 13px}
+  #bl .srow + .srow{border-top:1px solid var(--line)}
+  #bl .sicon{flex:0 0 auto;color:var(--c-ink,var(--ink));margin-top:1px}
+  #bl .scol{min-width:0}
+  #bl .slabel{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+  #bl .sval{font-size:14px;font-weight:600;color:var(--ink);margin-top:3px;line-height:1.35}
+  #bl .sval em{font-style:normal;font-weight:500;color:var(--ink-2)}
+  #bl .snote{font-size:12px;color:var(--ink-2);line-height:1.5;margin-top:4px}
   #bl .focus{display:flex;gap:11px;background:var(--c-bg,var(--rest-bg));border-radius:var(--radius);padding:14px 15px;margin-bottom:14px}
   #bl .focus .fic{flex:0 0 auto;color:var(--c-ink)}
   #bl .focus p{margin:0;font-size:14px;color:var(--c-ink,var(--ink));line-height:1.55}
@@ -212,7 +214,6 @@
     pulse:'<path d="M3 12h4l3 8 4-16 3 8h4"/>',
     leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 22 17 7"/>',
     moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>',
-    sunrise:'<path d="M12 2v6M5.6 8.6l1.4 1.4M2 16h4M18 16h4M17 10l1.4-1.4M8 16a4 4 0 0 1 8 0M2 20h20"/>',
     zap:'<path d="M13 2 4 14h8l-1 8 9-12h-8l1-8Z"/>',
     layers:'<path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/>',
     flame:'<path d="M12 2c3 4 5 6 5 9a5 5 0 0 1-10 0c0-1.6.8-3 2-4 .3 1.2 1.2 2 2.5 2C10.4 8 11 5 12 2Z"/>',
@@ -220,21 +221,22 @@
     chevR:'<path d="M9 6l6 6-6 6"/>',
     chevL:'<path d="M15 6l-6 6 6 6"/>',
     shield:'<path d="M12 2 4 5v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5Z"/>',
-    repeat:'<path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/>',
     rows:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+    circuit:'<path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/>',
     play:'<path d="M8 5v14l11-7Z"/>',
     clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     swap:'<path d="M16 3l4 4-4 4M20 7H5"/><path d="M8 21l-4-4 4-4M4 17h15"/>',
     gauge:'<path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M13.4 10.6 19 5"/><path d="M4 20a9 9 0 1 1 16 0"/>',
-    watch:'<rect x="6" y="6" width="12" height="12" rx="3"/><path d="M9 6V3h6v3M9 18v3h6v-3"/><path d="M12 10v2.3l1.6 1"/>'
+    watch:'<rect x="6" y="6" width="12" height="12" rx="3"/><path d="M9 6V3h6v3M9 18v3h6v-3"/><path d="M12 10v2.3l1.6 1"/>',
+    pin:'<path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>'
   };
   function ico(n,s,fill){s=s||18;var f=fill?'currentColor':'none';var sw=fill?'0':'2';
     return '<svg viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="'+f+'" stroke="currentColor" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+P[n]+'</svg>';}
   function yt(q){return "https://www.youtube.com/results?search_query="+encodeURIComponent(q);}
   function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function setsN(){return week===0?2:3;}
 
-  var SWAP={};
-  try{ SWAP=JSON.parse(localStorage.getItem("tr_swap")||"{}"); }catch(e){ SWAP={}; }
+  var SWAP={}; try{ SWAP=JSON.parse(localStorage.getItem("tr_swap")||"{}"); }catch(e){ SWAP={}; }
   function saveSwap(){ try{ localStorage.setItem("tr_swap",JSON.stringify(SWAP)); }catch(e){} }
 
   var SIX={
@@ -244,174 +246,176 @@
       [[10,20],[8,50],[6,60],[6,65],[6,70],[6,72.5]],
       [[10,20],[8,50],[6,60],[6,65],[6,72.5],[6,75]]
     ],
-    note:"Six sets, ascending weight. The early sets are warm-ups; the last two are the money sets — hard, but always leave clean reps in the tank. Never grind a max: grinding makes you clench and brace, and that pulls on the shoulder."
+    note:"Warm up with 1–2 lighter sets first (they don't count). The last two work sets are the money sets — hard, but always leave clean reps in the tank. Never grind a max: grinding makes you clench and brace, and that pulls on the shoulder."
   };
   function e(n,q,d,p,setup,alt){return {name:n,q:q,d:d,p:p,setup:setup,alt:alt};}
 
-  var A_LEGPRESS={name:"Leg Press",q:"leg press machine how to",d:"Feet mid-platform, shoulder-width. Push through your whole foot and stop just short of locking your knees. Same quad-and-glute job as the belt squat, with your torso supported and the shoulder out of it.",setup:"Feet mid · 2s down"};
-  var A_LEGPRESS_HIGH={name:"Leg Press (feet high)",q:"leg press feet high glutes",d:"Feet high on the platform, shoulder-width, pushing from the heels. That foot position shifts the work to your glutes and hamstrings — the same target as the hip thrust.",setup:"Feet high · heels drive"};
-  var A_SISSY={name:"Assisted Sissy Squat",q:"assisted sissy squat",d:"Rail in your good hand, lean back on your toes and bend the knees. A deep burn down the front of your thighs — a bodyweight stand-in for the leg extension.",setup:"Slow · 3s down"};
-  var A_LYINGCURL={name:"Lying Leg Curl",q:"lying leg curl machine",d:"Face-down hamstring curl, chest supported, arms just resting. Same hamstring job as the seated version.",setup:"1s up · 2s down"};
-  var A_SEATEDCURL={name:"Seated Leg Curl",q:"seated leg curl machine",d:"Seated hamstring curl, torso strapped in. Same hamstring job as the lying version.",setup:"1s up · 2s down"};
-  var A_SIDEABD={name:"Side-Lying Hip Abduction",q:"side lying hip abduction exercise",d:"Lie on your side, lift the top leg straight up and lower it slowly. A burn on the outside of your hip — the abductor machine's job with zero equipment.",setup:"Slow · 2s down"};
-  var A_SUMO={name:"Bodyweight Sumo Squat",q:"bodyweight sumo squat",d:"Wide stance, toes turned out, sit straight down and squeeze up. Hits the inner thighs — the same muscles the adductor machine trains.",setup:"2s down · squeeze up"};
-  var A_SLBRIDGE={name:"Single-Leg Glute Bridge",q:"single leg glute bridge",d:"One foot planted, other leg straight out, drive your hips up off the floor. A hard glute burn one side at a time — the back extension's job with no bench.",setup:"2s hold at top"};
-  var A_CALFSTEP={name:"Bodyweight Calf Raise (step)",q:"bodyweight calf raise on step",d:"Balls of your feet on a step, good hand on a rail for balance. Rise up tall, then lower slowly below the step for a full stretch.",setup:"1s up · 3s down"};
-  var A_STAIR={name:"Stair Climber",q:"stair climber cardio machine",d:"Steady climbing at a conversational pace. Rest your good hand lightly on the rail — never grip hard or lean your weight on it.",setup:"60 steps/min · steady"};
-  var A_STAIRINT={name:"Stair Climber Intervals",q:"stair climber interval training",d:"30 seconds of fast climbing, then 90 seconds slow. Legs do all the work; your good hand rests lightly on the rail.",setup:"Fast: 90 steps/min · Easy: 45"};
+  // bodyweight fallbacks for when a machine is occupied
+  var BW_BULG={name:"Bodyweight Bulgarian Split Squat",q:"bodyweight bulgarian split squat",d:"Back foot on a bench, good hand on a rail, drop straight down. One leg at a time — bodyweight and the long range is plenty.",setup:"2s down"};
+  var BW_SISSY={name:"Assisted Sissy Squat",q:"assisted sissy squat",d:"Rail in your good hand, lean back on your toes and bend the knees for a deep quad burn.",setup:"3s down"};
+  var BW_SLIDE={name:"Sliding Leg Curl",q:"bodyweight sliding leg curl",d:"On your back, heels on a towel or slider, hips up. Slide your heels out and pull them back in — a bodyweight hamstring curl.",setup:"Slow · hips stay up"};
+  var BW_BRIDGE={name:"Single-Leg Glute Bridge",q:"single leg glute bridge",d:"One foot planted, other leg straight out, drive your hips up. A hard glute burn one side at a time.",setup:"2s hold at top"};
+  var BW_CALF={name:"Bodyweight Calf Raise (step)",q:"bodyweight calf raise on step",d:"Balls of your feet on a step, good hand on a rail. Rise up tall, lower slowly below the step for a full stretch.",setup:"3s down"};
+  var A_STAIR={name:"Stair Master",q:"stair master cardio machine",d:"Steady climbing at a conversational pace. Good hand resting lightly on the rail — never grip hard or lean your weight on it.",setup:"60 steps/min · steady"};
+  var A_STAIRINT={name:"Stair Master Intervals",q:"stair master interval training",d:"30 seconds fast climbing, then 90 seconds slow. Legs do all the work; good hand rests lightly on the rail.",setup:"Fast: 90/min · Easy: 45/min"};
+
+  var FLOOR_4={f:"4th floor",n:"Leg Press, Leg Curl, Leg Extension — the whole workout is on this floor, no stairs mid-session."};
+  var FLOOR_4C={f:"4th floor",n:"Same floor as Lower A — Leg Press, Leg Extension and Leg Curl all here."};
+  var FLOOR_3={f:"3rd floor",n:"Glute Drive, Hamstring Roller and the Angled Leg Press — all side by side on this floor."};
+  var FLOOR_ANY={f:"Any floor",n:"It's all cardio — grab whatever treadmill or bike is open and stay put."};
+
+  var W_STR={types:[{n:"Traditional Strength Training"}],note:"One workout, start to finish — from the warm-up through the walk finisher."};
+  var W_WALK={types:[{n:"Indoor Walk"}],note:"One workout, start to finish — leave it running through the core."};
+  var W_INT={types:[{n:"Indoor Cycle",f:"for the bike intervals"},{n:"Indoor Walk",f:"for the steady walk after"}],note:"Two separate workouts: end the cycle when the intervals finish, then start an Indoor Walk. Logging the walk as cycling would skew your calorie burn."};
 
   var DAYS=[
-    { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower A", sub:"Quad-dominant", tag:"For Weight", est:"60 min",
-      watch:{types:[{n:"Traditional Strength Training"}],note:"One workout for the whole session — start it at the warm-up and end it after the walk finisher."},
-      focus:"Heavy quad day. Legs load hard through a hip belt so your shoulder stays completely out of it. You should leave feeling like your thighs did real work — not maxed out.",
+    { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower A", sub:"Quad-dominant", tag:"For Weight", est:"~60 min", floor:FLOOR_4, watch:W_STR,
+      focus:"Heavy quad day. Legs load hard through the leg press so your shoulder stays completely out of it. You should leave feeling like your thighs did real work — not maxed out.",
       secs:[
-        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+        {l:"Warm-up",ic:"zap",struct:"circuit",slots:["A1","A2","A3"],
           ex:[
-            e("Bodyweight Squat","bodyweight air squat form","Feet shoulder-width, sit down and drive up. No weight — this just warms the knees, hips and quads before you load them.","15","Slow · full depth"),
-            e("Glute Bridge","bodyweight glute bridge","Drive your hips up and squeeze your glutes hard at the top. Primes the muscles you're about to train so the big lift feels stronger.","15","2s squeeze at top"),
-            e("Assisted Sissy Squat","assisted sissy squat","Hold a rail with your good hand, lean back on your toes and bend your knees. A deep stretch-burn down the front of your thighs.","10","3s down")
+            e("Bodyweight Squat","bodyweight air squat form","Feet shoulder-width, sit down and drive up. No weight — this warms the knees, hips and quads before you load them.","15","Slow · full depth"),
+            e("Glute Bridge","bodyweight glute bridge","Drive your hips up and squeeze your glutes hard at the top. Primes the muscles you're about to train.","15","2s squeeze at top"),
+            e("Assisted Sissy Squat","assisted sissy squat","Hold a rail with your good hand, lean back on your toes and bend your knees. A deep stretch down the front of your thighs.","10","3s down")
           ]},
-        {l:"Main strength",ic:"dumbbell",struct:"six",rest:"2 min",slots:["B"],
-          ex:[e("Belt Squat","belt squat machine how to","Your biggest muscle-builder of the week, loaded through a hip belt so your arms and shoulder do nothing. The single highest-value thing you can do to hold muscle before surgery.","","2s down · drive up",A_LEGPRESS)]},
-        {l:"Auxiliary",ic:"layers",struct:"superset",rounds:[2,3,3,4],rest:"90s",slots:["C1","C2","C3"],
+        {l:"Main lift",ic:"dumbbell",struct:"six",rest:"2 min",slots:["B"],
+          ex:[e("Leg Press","leg press machine how to","Your biggest muscle-builder of the week — feet mid-platform, push through the whole foot and stop just short of locking out. Torso supported, shoulder doing nothing.","","Feet mid · 2s down",BW_BULG)]},
+        {l:"Accessories",ic:"layers",struct:"straight",rest:"90s",slots:["C1","C2","C3"],
           ex:[
-            e("Leg Extension","leg extension machine proper form","Isolates the quads with your torso fully supported. Expect a deep burn in the front of your thighs on the last few reps.",["10","12","14","12"],"1s up · 2s down",A_SISSY),
-            e("Bodyweight Bulgarian Split Squat","bodyweight bulgarian split squat","Back foot on a bench, good-hand on a rail, drop straight down. Brutal in the best way, one leg at a time. Bodyweight and the long range is plenty.",["6 / leg","8 / leg","10 / leg","10 / leg · 2s pause"],"2s down"),
-            e("Seated Leg Curl","seated leg curl machine","Curl your heels down to train the hamstrings, torso strapped in. Balances all the quad work so your legs stay healthy.",["10","12","14","12"],"1s up · 2s down",A_LYINGCURL)
+            e("Leg Curl","leg curl machine hamstring","Curl your heels down to train the hamstrings, torso strapped in. Balances all the quad work so your legs stay healthy.","12","1s up · 2s down",BW_SLIDE),
+            e("Leg Extension","leg extension machine proper form","Isolates the quads with your torso fully supported. Expect a deep burn in the front of your thighs on the last reps.","12","1s up · 2s down",BW_SISSY),
+            e("Bodyweight Bulgarian Split Squat","bodyweight bulgarian split squat","Back foot on a bench, good hand on a rail, drop straight down. One leg at a time — no weight needed.","10 / leg","2s down")
           ]},
-        {l:"Cash-out",ic:"flame",struct:"straight",rest:"60s",slots:["D1","D2"],
-          ex:[
-            e("Seated Calf Raise","seated calf raise machine","Seated so the pad rests on your knees, never your shoulders. Push through the balls of your feet and pause at the top.",["3 sets × 12","3 sets × 15","4 sets × 15","4 sets × 20"],"2s pause at top",A_CALFSTEP),
-            e("Reverse Crunch","reverse crunch exercise","Lie back, arms flat and relaxed at your sides, curl your knees toward your chest with your lower abs. Core work that never touches the shoulder.","3 sets × 15","Slow · no swinging")
-          ]},
+        {l:"Cash-out",ic:"flame",struct:"straight",rest:"60s",slots:["D1"],
+          ex:[e("Leg-Press Calf Press","leg press calf raise","Feet low on the leg-press platform, push through the balls of your feet for long, controlled calf reps. Torso fully supported.","15","3s down · full stretch",BW_CALF)]},
         {l:"Finisher",ic:"pulse",struct:"single",meta:"Fat-burn walk",slots:["E"],
-          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close the session — free calorie burn while your legs cool down. Arms relaxed at your sides, don't hold the rails.","12:00","8% incline · 3.2 mph",A_STAIR)]}
+          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close the session — free calorie burn while your legs cool down. Arms relaxed at your sides.","8:00","8% incline · 3.2 mph",A_STAIR)]}
       ]},
 
-    { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning", sub:"Zone 2 + core", tag:"For Time", est:"60 min",
-      watch:{types:[{n:"Indoor Walk"}],note:"One workout, start to finish. Leave it running through the core work at the end."},
+    { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning", sub:"Zone 2 + core", tag:"For Time", est:"~55 min", floor:FLOOR_ANY, watch:W_WALK,
       focus:"Your easy engine day. A steady Zone 2 pace — you could just barely hold a conversation. This is where fat loss and heart health quietly happen. Never gassed.",
       secs:[
-        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+        {l:"Warm-up",ic:"zap",struct:"circuit",slots:["A1","A2","A3"],
           ex:[
-            e("Easy Incline Walk","treadmill warm up walk","Three easy minutes to get blood into your legs and lift your heart rate gently. Light and loose, not work.","3:00","5% incline · 3.0 mph",A_STAIR),
-            e("Bodyweight Lateral Lunge","bodyweight lateral lunge","Step wide to one side, sit into that hip, push back to center. Opens the hips and inner thighs and wakes up the muscles that stabilize your knees sideways.","10 / side","Controlled · full sit"),
-            e("Dead-Bug (legs only)","dead bug exercise legs only","On your back, arms relaxed, slowly extend one leg at a time while keeping your lower back flat. Teaches your midsection to brace.","12","Slow · back stays flat")
+            e("Easy Incline Walk","treadmill warm up walk","Three easy minutes to get blood into your legs and lift your heart rate gently.","3:00","5% incline · 3.0 mph",A_STAIR),
+            e("Bodyweight Lateral Lunge","bodyweight lateral lunge","Step wide to one side, sit into that hip, push back to center. Opens the hips and inner thighs.","10 / side","Controlled · full sit"),
+            e("Dead-Bug (legs only)","dead bug exercise legs only","On your back, arms relaxed, slowly extend one leg at a time, lower back flat. Teaches your midsection to brace.","12","Slow · back stays flat")
           ]},
         {l:"Main",ic:"pulse",struct:"single",meta:"Steady state · Zone 2",slots:["B"],
-          ex:[e("Incline Treadmill Walk","incline treadmill walk zone 2","Conversational, nose-breathing pace — you could talk in full sentences but wouldn't want to sing. Arms relaxed and free; don't grip the rails. This is your biggest calorie burn of the week.",["45:00","48:00","50:00","52:00"],"10% incline · 3.2 mph",A_STAIR)]},
-        {l:"Core",ic:"hex",struct:"superset",rounds:[2,2,2,2],rest:"45s",slots:["C1","C2"],
+          ex:[e("Incline Treadmill Walk","incline treadmill walk zone 2","Conversational, nose-breathing pace — you could talk in full sentences but wouldn't want to sing. Arms relaxed and free. Your biggest calorie burn of the week.","40:00","10% incline · 3.2 mph",A_STAIR)]},
+        {l:"Core",ic:"hex",struct:"straight",rest:"45s",slots:["C1","C2"],
           ex:[
-            e("Lying Straight-Leg Raise","lying straight leg raise","Hands under your glutes, lift straight legs to vertical and lower slowly — the slow lower is where the lower-ab burn lives.",["10","12","15","15"],"3s down"),
-            e("Flutter Kicks","flutter kicks core","Legs straight, small fast up-down kicks, hands tucked under your glutes. A steady burn low in the abs.",["25s","30s","40s","45s"],"Fast · small range")
+            e("Lying Straight-Leg Raise","lying straight leg raise","Hands under your glutes, lift straight legs to vertical and lower slowly — the slow lower is where the burn lives.","15","3s down"),
+            e("Flutter Kicks","flutter kicks core","Legs straight, small fast up-down kicks, hands tucked under your glutes. A steady burn low in the abs.","40s","Fast · small range")
           ]}
       ]},
 
-    { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower B", sub:"Posterior chain / glute", tag:"For Weight", est:"60 min",
-      watch:{types:[{n:"Traditional Strength Training"}],note:"One workout for the whole session — start it at the warm-up and end it after the walk finisher."},
-      focus:"Heavy glute and hamstring day — the back of your legs. The hip-thrust machine loads your posterior chain hard with zero shoulder involvement. Strong glutes are your engine for walking, stairs, and eventually the court.",
+    { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower B", sub:"Posterior chain / glute", tag:"For Weight", est:"~60 min", floor:FLOOR_3, watch:W_STR,
+      focus:"Heavy glute and hamstring day — the back of your legs. The glute drive loads your posterior chain hard with zero shoulder involvement. Strong glutes are your engine for walking, stairs, and eventually the court.",
       secs:[
-        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+        {l:"Warm-up",ic:"zap",struct:"circuit",slots:["A1","A2","A3"],
           ex:[
-            e("Bodyweight Hip Hinge","bodyweight hip hinge pattern","Push your hips straight back with soft knees, hands sliding down your thighs, chest down. Grooves the hinge pattern — no weight, no grip.","12","Slow · feel the hamstrings"),
-            e("Frog Pump","frog pump glute exercise","On your back, soles together and knees out, pump your hips up and squeeze. Switches the glutes fully on before the heavy work.","20","Fast pumps · hard squeeze"),
-            e("Bodyweight Squat","bodyweight air squat form","Feet shoulder-width, sit down and drive up. Warms the knees and hips before you load them.","15","Slow · full depth")
+            e("Bodyweight Hip Hinge","bodyweight hip hinge pattern","Push your hips straight back with soft knees, hands sliding down your thighs, chest down. Grooves the hinge — no weight.","12","Slow · feel the hamstrings"),
+            e("Frog Pump","frog pump glute exercise","On your back, soles together and knees out, pump your hips up and squeeze. Switches the glutes fully on.","20","Fast pumps · hard squeeze"),
+            e("Bodyweight Squat","bodyweight air squat form","Feet shoulder-width, sit down and drive up. Warms the knees and hips.","15","Slow · full depth")
           ]},
-        {l:"Main strength",ic:"dumbbell",struct:"six",rest:"2 min",slots:["B"],
-          ex:[e("Machine Hip Thrust","machine hip thrust glute drive","Your heavy glute and hamstring builder — the lever pad sits across your hips, so it loads the whole back of your legs with no shoulder involvement. Drive through your heels.","","2s down · 1s squeeze",A_LEGPRESS_HIGH)]},
-        {l:"Auxiliary",ic:"layers",struct:"superset",rounds:[2,3,3,4],rest:"90s",slots:["C1","C2","C3"],
+        {l:"Main lift",ic:"dumbbell",struct:"six",rest:"2 min",slots:["B"],
+          ex:[e("Glute Drive","glute drive machine hip thrust","Your heavy glute and hamstring builder — the pad sits across your hips and loads the whole back of your legs with no shoulder involvement. Drive through your heels.","","2s down · 1s squeeze",BW_BRIDGE)]},
+        {l:"Accessories",ic:"layers",struct:"straight",rest:"90s",slots:["C1","C2","C3"],
           ex:[
-            e("Lying Leg Curl","lying leg curl machine","Face-down hamstring curl, chest supported, arms just resting. More hamstring volume to balance the glute work.",["10","12","14","12"],"1s up · 2s down",A_SEATEDCURL),
-            e("45° Back Extension","45 degree back extension hyperextension","Hips on the pad, arms crossed on your chest (no weight), rise until straight and squeeze your glutes. Great for posture while you're deconditioned elsewhere.",["10","12","15","15"],"2s squeeze at top",A_SLBRIDGE),
-            e("Hip Abductor Machine","hip abductor machine glutes","Push your knees outward against the pads, leaning forward slightly to hit the upper glutes. Builds the stabilizers that keep hips and knees healthy.",["12","15","18","15"],"Lean forward · 2s hold",A_SIDEABD)
+            e("Hamstring Roller","hamstring curl machine","The hamstring station right next to the glute drive. Curl under control and squeeze the back of your thighs.","12","Slow · controlled",BW_SLIDE),
+            e("Angled Leg Press (feet high)","leg press feet high glutes","Feet high on the angled press, shoulder-width, pushing from the heels. That foot position shifts the work to your glutes and hamstrings.","12","Feet high · heels drive",BW_BULG),
+            e("Side-Lying Hip Abduction","side lying hip abduction exercise","Lie on your side, lift the top leg straight up and lower it slowly. A burn on the outside of your hip — no machine, do it on a mat.","15 / side","Slow · 2s down")
           ]},
-        {l:"Cash-out",ic:"flame",struct:"straight",rest:"60s",slots:["D1","D2"],
-          ex:[
-            e("Leg-Press Calf Press","leg press calf raise","Feet low on the leg-press platform, push through the balls of your feet for long, controlled calf reps. Torso fully supported.",["3 sets × 12","3 sets × 15","4 sets × 15","4 sets × 20"],"3s down · full stretch",A_CALFSTEP),
-            e("Legs-Only Dead-Bug","dead bug exercise","On your back, arms at your sides, slowly extend one leg then the other, lower back flat. Deep-core bracing that protects your back under load.","3 sets × 12 / leg","Slow · back stays flat")
-          ]},
+        {l:"Cash-out",ic:"flame",struct:"straight",rest:"60s",slots:["D1"],
+          ex:[e("Angled Leg-Press Calf Press","leg press calf raise","Feet low on the angled press, push through the balls of your feet for long, controlled calf reps.","15","3s down · full stretch",BW_CALF)]},
         {l:"Finisher",ic:"pulse",struct:"single",meta:"Fat-burn walk",slots:["E"],
-          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close the session — free calorie burn while your legs cool down. Arms relaxed at your sides.","12:00","8% incline · 3.2 mph",A_STAIR)]}
+          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close the session. Arms relaxed at your sides.","8:00","8% incline · 3.2 mph",A_STAIR)]}
       ]},
 
-    { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning", sub:"Intervals + core", tag:"For Reps", est:"60 min",
-      watch:{types:[{n:"Indoor Cycle",f:"for the bike intervals"},{n:"Indoor Walk",f:"for the 25-min steady walk"}],note:"Two separate workouts. End the cycle when the intervals finish, then start an Indoor Walk — 25 minutes of walking logged as cycling would badly skew your calorie burn."},
+    { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning", sub:"Intervals + core", tag:"For Reps", est:"~55 min", floor:FLOOR_ANY, watch:W_INT,
       focus:"Short and intense, then a long easy walk. The hard 30-second bursts should have you breathing heavy by the end of each one — legs drive it, arm stays relaxed.",
       secs:[
-        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+        {l:"Warm-up",ic:"zap",struct:"circuit",slots:["A1","A2","A3"],
           ex:[
-            e("Easy Bike Spin","stationary bike warm up","Three easy minutes on an upright bike to warm the legs and raise your heart rate before the hard efforts.","3:00","70 rpm · light resistance"),
-            e("Reverse Lunge to Box","reverse lunge to box","Step back and tap a knee toward a box behind you, good-hand rail nearby. Opens the hips and preps single-leg control.","8 / leg","Controlled · light tap"),
+            e("Easy Bike Spin","stationary bike warm up","Three easy minutes on an upright bike to warm the legs before the hard efforts.","3:00","70 rpm · light resistance"),
+            e("Reverse Lunge to Box","reverse lunge to box","Step back and tap a knee toward a box behind you, good-hand rail nearby. Opens the hips.","8 / leg","Controlled · light tap"),
             e("Glute Bridge","bodyweight glute bridge","Hips up, squeeze the glutes. Primes the posterior chain so your intervals feel powerful.","15","2s squeeze at top")
           ]},
-        {l:"Main",ic:"pulse",struct:"single",meta:"Intervals",slots:["B"],
-          ex:[e("Upright Bike Sprints","stationary bike interval sprints","30 seconds hard, 90 seconds easy, on a standard upright bike. Push the hard efforts until you're breathing heavy. Keep your right arm relaxed on the bars — legs do all the work.",["6 × 30s / 90s","8 × 30s / 90s","9 × 30s / 90s","10 × 30s / 90s"],"Hard: 90 rpm, heavy · Easy: 60 rpm, light",A_STAIRINT)]},
+        {l:"Intervals",ic:"pulse",struct:"single",meta:"8 rounds",slots:["B"],
+          ex:[e("Upright Bike Sprints","stationary bike interval sprints","30 seconds hard, 90 seconds easy, on a standard upright bike. Push the hard efforts until you're breathing heavy. Keep your right arm relaxed on the bars.","8 × 30s / 90s","Hard: 90 rpm heavy · Easy: 60 rpm light",A_STAIRINT)]},
         {l:"Steady",ic:"pulse",struct:"single",meta:"Zone 2 walk",slots:["C"],
-          ex:[e("Incline Treadmill Walk","incline treadmill walk zone 2","Easy conversational walk after the intervals. This is where most of the day's calorie burn actually comes from. Arms relaxed and free.","25:00","8% incline · 3.2 mph",A_STAIR)]},
-        {l:"Core",ic:"hex",struct:"superset",rounds:[2,2,3,3],rest:"45s",slots:["D1","D2"],
+          ex:[e("Incline Treadmill Walk","incline treadmill walk zone 2","Easy conversational walk after the intervals — where most of the day's calorie burn comes from. Arms relaxed and free.","20:00","8% incline · 3.2 mph",A_STAIR)]},
+        {l:"Core",ic:"hex",struct:"straight",rest:"45s",slots:["D1","D2"],
           ex:[
-            e("Reverse Crunch","reverse crunch exercise","Arms flat at your sides, curl your knees to your chest with the lower abs. Low-belly burn, no shoulder.",["10","12","15","18"],"Slow · no swinging"),
-            e("Bicycle Crunch","bicycle crunch abs","Alternate elbow toward opposite knee — keep your hands at your sides, not behind your head (behind-the-head is a bad shoulder position for you).",["25s","30s","40s","45s"],"Steady · controlled")
+            e("Reverse Crunch","reverse crunch exercise","Arms flat at your sides, curl your knees to your chest with the lower abs. Low-belly burn, no shoulder.","15","Slow · no swinging"),
+            e("Bicycle Crunch","bicycle crunch abs","Alternate elbow toward opposite knee — hands at your sides, not behind your head (bad shoulder position for you).","40s","Steady · controlled")
           ]}
       ]},
 
-    { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower C", sub:"Unilateral / hypertrophy", tag:"For Reps", est:"60 min",
-      watch:{types:[{n:"Traditional Strength Training"}],note:"One workout for the whole session — start it at the warm-up and end it after the walk finisher."},
+    { t:"strength", cls:"t-strength", ico:"dumbbell", title:"Lower C", sub:"Unilateral / hypertrophy", tag:"For Reps", est:"~55 min", floor:FLOOR_4C, watch:W_STR,
       focus:"A pump day, not a heavy day — controlled reps and higher volume chasing a deep quad-and-glute burn. Lighter on the joints than Monday and Wednesday, and it rounds out the week.",
       secs:[
-        {l:"Warm-up",ic:"zap",struct:"superset",rounds:[1,1,1,1],rest:"none",slots:["A1","A2","A3"],
+        {l:"Warm-up",ic:"zap",struct:"circuit",slots:["A1","A2","A3"],
           ex:[
             e("Bodyweight Lateral Lunge","bodyweight lateral lunge","Step wide to one side, sit into that hip, push back to center. Opens the hips and inner thighs.","10 / side","Controlled · full sit"),
             e("Assisted Sissy Squat","assisted sissy squat","Rail in your good hand, lean back and bend the knees for a big quad stretch.","10","3s down"),
             e("Glute Bridge","bodyweight glute bridge","Hips up, squeeze. Switches the glutes on for the volume ahead.","20","2s squeeze at top")
           ]},
-        {l:"Main",ic:"dumbbell",struct:"straight",meta:"Quality volume",rest:"90s",slots:["B1","B2"],
+        {l:"Main",ic:"dumbbell",struct:"straight",rest:"90s",meta:"Quality volume",slots:["B1","B2"],
           ex:[
-            e("Leg Press","leg press machine how to","Controlled reps chasing a deep quad-and-glute pump — not a heavy top set. Torso supported, shoulder out of it.",["3 sets × 12","4 sets × 14","4 sets × 15","5 sets × 12"],"Feet mid · 2s down"),
-            e("Bodyweight Walking Lunge","bodyweight walking lunge","Continuous lunges with just your bodyweight, a rail within reach. Keeps both legs even and strong.",["3 sets × 8 / leg","3 sets × 12 / leg","3 sets × 14 / leg","3 sets × 16 / leg"],"Long stride · knee to floor")
+            e("Leg Press","leg press machine how to","Controlled reps chasing a deep quad-and-glute pump — not a heavy top set. Feet mid-platform, torso supported.","12","Feet mid · 2s down",BW_BULG),
+            e("Bodyweight Walking Lunge","bodyweight walking lunge","Continuous lunges with just your bodyweight, a rail within reach. Keeps both legs even and strong.","12 / leg","Long stride · knee to floor")
           ]},
-        {l:"Auxiliary",ic:"layers",struct:"superset",rounds:[2,3,3,3],rest:"90s",slots:["C1","C2","C3"],
+        {l:"Accessories",ic:"layers",struct:"straight",rest:"90s",slots:["C1","C2"],
           ex:[
-            e("Leg Extension (1.5 reps)","leg extension 1.5 reps","Full rep, then a half rep, then back up — that's one. Doubles the time your quads are under tension for a serious burn.",["8","10","10","10"],"Full + half = 1 rep",A_SISSY),
-            e("Seated Leg Curl","seated leg curl machine","Hamstring curl, torso supported. Keeps the back of your legs balanced with all the quad volume.","15","1s up · 2s down",A_LYINGCURL),
-            e("Hip Adductor Machine","hip adductor machine inner thigh","Squeeze your knees together against the pads for the inner thighs — the muscles the abductor misses.",["12","15","18","20"],"2s squeeze",A_SUMO)
+            e("Leg Extension","leg extension machine proper form","Isolates the quads, torso supported. Chase the burn on the last reps.","15","1s up · 2s down",BW_SISSY),
+            e("Leg Curl","leg curl machine hamstring","Hamstring curl, torso strapped in. Balances the quad volume.","15","1s up · 2s down",BW_SLIDE)
           ]},
         {l:"Cash-out",ic:"flame",struct:"straight",rest:"60s",slots:["D1"],
-          ex:[e("Seated Calf Raise","seated calf raise machine","Seated, pad on the knees, push through the balls of your feet and squeeze at the top.","3 sets × 15","2s pause at top",A_CALFSTEP)]},
+          ex:[e("Leg-Press Calf Press","leg press calf raise","Feet low on the leg press, push through the balls of your feet and squeeze at the top.","15","3s down · full stretch",BW_CALF)]},
         {l:"Finisher",ic:"pulse",struct:"single",meta:"Fat-burn walk",slots:["E"],
-          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close out the week's lifting. Arms relaxed at your sides.","15:00","8% incline · 3.2 mph",A_STAIR)]}
+          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close out the week's lifting. Arms relaxed at your sides.","8:00","8% incline · 3.2 mph",A_STAIR)]}
       ]},
 
-    { t:"rest", cls:"t-rest", ico:"moon", title:"Rest day", sub:"Full recovery", tag:"Rest", est:"",
+    { t:"rest", cls:"t-rest", ico:"moon", title:"Rest day", sub:"Full recovery", tag:"Rest", est:"", floor:null, watch:null,
       focus:"Nothing programmed today, on purpose. Muscle is built and repaired on rest days, not just training days — this is when the work you've put in actually sticks. Move gently if you like (a walk toward your 10k steps), but no training. Sleep well and eat your protein.",
       secs:[]},
 
-    { t:"rec", cls:"t-rec", ico:"leaf", title:"Active recovery", sub:"Zone 2 + mobility", tag:"Recovery", est:"55 min",
-      watch:{types:[{n:"Indoor Walk"}],note:"One workout — keep it running through the mobility and core."},
+    { t:"rec", cls:"t-rec", ico:"leaf", title:"Active recovery", sub:"Zone 2 + mobility", tag:"Recovery", est:"~50 min", floor:FLOOR_ANY, watch:W_WALK,
       focus:"A light, restorative day. Easy cardio to flush the legs, a few minutes of mobility to stay loose, and gentle core. Should feel like active rest — never hard. Hit your 10k steps.",
       secs:[
         {l:"Main",ic:"pulse",struct:"single",meta:"Easy cardio · Zone 2",slots:["A"],
-          ex:[e("Zone 2 Incline Walk","zone 2 incline treadmill walk","An easy incline walk to flush the legs and add gentle calorie burn. Restorative, never hard — you should be able to hold a full conversation.",["40:00","42:00","45:00","45:00"],"8% incline · 3.0 mph",A_STAIR)]},
+          ex:[e("Zone 2 Incline Walk","zone 2 incline treadmill walk","An easy incline walk to flush the legs and add gentle calorie burn. Restorative — you should be able to hold a full conversation.","40:00","8% incline · 3.0 mph",A_STAIR)]},
         {l:"Mobility",ic:"leaf",struct:"single",meta:"Mobility",slots:["B"],
           ex:[e("Lower-Body Mobility Flow","lower body mobility routine","Hip openers, 90/90 hip rotations, ankle rocks, and a couch stretch — roughly 2 minutes per position. Skip anything that pulls on the shoulder.","8 min","~2 min per position")]},
-        {l:"Core",ic:"hex",struct:"superset",rounds:[2,2,2,2],rest:"45s",slots:["C1","C2"],
+        {l:"Core",ic:"hex",struct:"straight",rest:"45s",slots:["C1","C2"],
           ex:[
-            e("Lying Straight-Leg Raise","lying straight leg raise","Slow leg raises, hands under your glutes. Easy lower-ab work with no shoulder involvement.","12","3s down"),
+            e("Lying Straight-Leg Raise","lying straight leg raise","Slow leg raises, hands under your glutes. Easy lower-ab work, no shoulder.","15","3s down"),
             e("Flutter Kicks","flutter kicks core","Small fast kicks, hands under your glutes. A light core finisher.","30s","Fast · small range")
           ]}
       ]}
   ];
-  var SKIP={ t:"rest", cls:"t-rest", ico:"sunrise", title:"Starting tomorrow", sub:"Rest — begin Tuesday", tag:"Off", est:"",
-    focus:"You're kicking this block off on Tuesday, so today is a rest day. Coming off about 3 weeks without training, one more easy day before you start is a feature, not a setback. Eat your protein, get your 10k steps, and hit it fresh tomorrow.",
-    secs:[] };
-  function dayData(w,i){ if(w===0&&i===0)return SKIP; return DAYS[i]; }
+  function dayData(w,i){ return DAYS[i]; }
 
-  var week=0, curDay=null;
+  var week=0, curDay=null, curKind="schedule";
   var todayIdx=(function(){var n=new Date();var t=new Date(n.getFullYear(),n.getMonth(),n.getDate());var d=Math.round((t-BASE)/86400000);return (d>=0&&d<28)?d:-1;})();
   if(todayIdx>=0)week=Math.floor(todayIdx/7);
   function dateFor(w,d){var x=new Date(BASE);x.setDate(BASE.getDate()+w*7+d);return x;}
 
+  var savedNav=null; try{ savedNav=JSON.parse(localStorage.getItem("tr_nav")||"null"); }catch(e){}
+  if(savedNav && typeof savedNav.wk==="number" && savedNav.wk>=0 && savedNav.wk<4) week=savedNav.wk;
+
   var bl=document.getElementById("bl"),stack=document.getElementById("stack"),rootpage=document.getElementById("rootpage"),scrim=document.getElementById("scrim");
+
+  function saveNav(){
+    try{
+      var ds=0; if(detail){var s=detail.querySelector(".scroll"); if(s)ds=s.scrollTop;}
+      var rsEl=document.getElementById("rootscroll"); var rs=rsEl?rsEl.scrollTop:0;
+      localStorage.setItem("tr_nav",JSON.stringify({v:detail?curKind:"schedule",wk:week,day:curDay,rs:rs,ds:ds}));
+    }catch(e){}
+  }
+  var navT=null; function saveNavSoon(){ if(navT)return; navT=setTimeout(function(){navT=null;saveNav();},220); }
 
   function daysListHTML(w){
     var h='';
@@ -440,53 +444,58 @@
     for(var i=0;i<sets.length;i++)h+='<div class="chip"><div class="r num">'+sets[i][0]+'</div><div class="p num">'+sets[i][1]+'%</div><div class="lbl">'+(i===0?"Warm":i>=4?"Work":"Build")+'</div></div>';
     return h+'</div>';
   }
-  function exHTML(base,slot,six,key){
+  function exHTML(base,slot,struct,key){
     var on=!!SWAP[key], alt=base.alt, ex=base;
     if(on&&alt){ ex={name:alt.name,q:alt.q,d:alt.d,p:(alt.p||base.p),setup:(alt.setup||base.setup)}; }
     var h='<div class="ex"><div class="slot">'+esc(slot)+'</div><div class="exbody">';
-    if(six){
+    if(struct==="six"){
       h+='<div class="exhead"><div class="exname">'+esc(ex.name)+'</div></div>';
       if(on)h+='<div class="swaptag">'+ico("swap",11)+'Swapped</div>';
       h+=chipsHTML()+'<p class="setnote"><b>10, 8, 6, 6, 6, 6</b> — reps per set, ascending weight.</p>';
       if(ex.setup)h+='<div class="exsetup"><span class="si">'+ico("gauge",13)+'</span>'+esc(ex.setup)+'</div>';
       h+='<p class="exdesc">'+esc(ex.d)+'</p><p class="setnote">'+esc(SIX.note)+'</p>';
     } else {
-      var p=Array.isArray(ex.p)?ex.p[week]:ex.p;
-      h+='<div class="exhead"><div class="exname">'+esc(ex.name)+'</div><div class="exrx num">'+esc(p)+'</div></div>';
+      var rx = (struct==="straight") ? (setsN()+' sets × '+ex.p) : ex.p;
+      h+='<div class="exhead"><div class="exname">'+esc(ex.name)+'</div><div class="exrx num">'+esc(rx)+'</div></div>';
       if(on)h+='<div class="swaptag">'+ico("swap",11)+'Swapped</div>';
       if(ex.setup)h+='<div class="exsetup"><span class="si">'+ico("gauge",13)+'</span>'+esc(ex.setup)+'</div>';
       h+='<p class="exdesc">'+esc(ex.d)+'</p>';
     }
     h+='<div class="exbtns"><a class="btn" href="'+yt(ex.q)+'" target="_blank" rel="noopener"><span class="pl">'+ico("play",11,true)+'</span>How to do it</a>';
-    if(alt)h+='<button class="btn'+(on?' on':'')+'" data-swap="'+key+'">'+ico("swap",14)+(on?'Use '+esc(base.name):'No machine? Swap')+'</button>';
+    if(alt)h+='<button class="btn'+(on?' on':'')+'" data-swap="'+key+'">'+ico("swap",14)+(on?'Use '+esc(base.name):'Machine taken? Swap')+'</button>';
     h+='</div></div></div>';
     return h;
   }
   function structMeta(sec){
-    if(sec.struct==="superset"){
-      var r=sec.rounds[week],chain=sec.slots.join(" → ");
-      if(r===1)return '<div class="struct">'+ico("repeat",12)+'Circuit</div><span>'+chain+' straight through, once · no rest</span>';
-      return '<div class="struct">'+ico("repeat",12)+'Superset</div><span>'+chain+' back-to-back with no rest, then rest '+esc(sec.rest)+' · '+r+' rounds total</span>';
-    }
+    if(sec.struct==="circuit")return '<div class="struct">'+ico("circuit",12)+'Circuit</div><span>'+sec.slots.join(" → ")+' once through · no rest</span>';
     if(sec.struct==="six")return '<div class="struct">'+ico("rows",12)+'Straight sets</div><span>6 sets · rest '+esc(sec.rest)+' between sets</span>';
-    if(sec.struct==="straight")return '<div class="struct">'+ico("rows",12)+'Straight sets</div><span>finish each move before the next · rest '+esc(sec.rest)+' between sets</span>';
+    if(sec.struct==="straight")return '<div class="struct">'+ico("rows",12)+'Straight sets</div><span>'+setsN()+' sets each · rest '+esc(sec.rest)+' · finish one exercise before the next</span>';
     if(sec.struct==="single")return '<div class="struct">'+ico("clock",12)+esc(sec.meta||'')+'</div>';
     return '';
   }
+  function startCard(day){
+    if(!day.watch && !day.floor) return '';
+    var h='<div class="startcard">';
+    if(day.watch){
+      h+='<div class="srow"><span class="sicon">'+ico("watch",19)+'</span><div class="scol"><div class="slabel">Apple Watch</div>';
+      for(var t=0;t<day.watch.types.length;t++){var wt=day.watch.types[t];
+        h+='<div class="sval">'+esc(wt.n)+(wt.f?' <em>'+esc(wt.f)+'</em>':'')+'</div>';}
+      h+=(day.watch.note?'<div class="snote">'+esc(day.watch.note)+'</div>':'')+'</div></div>';
+    }
+    if(day.floor){
+      h+='<div class="srow"><span class="sicon">'+ico("pin",19)+'</span><div class="scol"><div class="slabel">Where to go</div><div class="sval">'+esc(day.floor.f)+'</div><div class="snote">'+esc(day.floor.n)+'</div></div></div>';
+    }
+    return h+'</div>';
+  }
   function dayHTML(w,i){
     var day=dayData(w,i),h='<div class="view '+day.cls+'">';
-    if(day.watch){
-      h+='<div class="watch"><span class="wic">'+ico("watch",20)+'</span><div><div class="wlabel">Apple Watch \u2014 workout type</div>';
-      for(var t=0;t<day.watch.types.length;t++){var wt=day.watch.types[t];
-        h+='<div class="wtype">'+esc(wt.n)+(wt.f?' <em>'+esc(wt.f)+'</em>':'')+'</div>';}
-      h+='<div class="wnote">'+esc(day.watch.note)+'</div></div></div>';
-    }
+    h+=startCard(day);
     h+='<div class="focus"><span class="fic">'+ico(day.ico,20)+'</span><p>'+esc(day.focus)+'</p></div>';
-    if(w===0&&day.secs.length)h+='<div class="reentry"><span class="ric">'+ico("sunrise",18)+'</span><p><b>Re-entry week&nbsp;&nbsp;</b>You\'re back after ~3 weeks off, so Week 1 is deliberately lighter — fewer sets, easier weights than you think, and 3–4 reps in reserve on everything (not the usual 2). Expect some soreness the first few days; it fades fast. Volume steps up next week.</p></div>';
+    if(w===0&&day.secs.length)h+='<div class="reentry"><span class="ric">'+ico("circuit",18)+'</span><p><b>Re-entry week&nbsp;&nbsp;</b>You\'re back after ~3 weeks off, so Week 1 is deliberately lighter — accessories are 2 sets instead of 3, easier weights than you think, and 3–4 reps in reserve on everything. Expect some soreness the first few days; it fades fast. Full volume kicks in from Week 2.</p></div>';
     if(day.t!=="rest")h+='<div class="safety"><span class="shd">'+ico("shield",18)+'</span><p><b>Shoulder rule&nbsp;&nbsp;</b>Right arm does nothing — no weight held, no hard grip, no bracing. Nothing overhead or behind the body. Any ache or instability in the shoulder → stop that movement.</p></div>';
     for(var s=0;s<day.secs.length;s++){var sec=day.secs[s];
       h+='<div class="sec"><div class="seclabel"><span class="sic">'+ico(sec.ic,16)+'</span><b>'+esc(sec.l)+'</b></div><div class="secmeta">'+structMeta(sec)+'</div>';
-      for(var x=0;x<sec.ex.length;x++)h+=exHTML(sec.ex[x],sec.slots[x],sec.struct==="six","d"+i+"s"+s+"e"+x);
+      for(var x=0;x<sec.ex.length;x++)h+=exHTML(sec.ex[x],sec.slots[x],sec.struct,"d"+i+"s"+s+"e"+x);
       h+='</div>';}
     return h+'</div>';
   }
@@ -495,12 +504,9 @@
       '<h2>Training</h2>'+
       '<p class="lead">A four-week block for the weeks before your shoulder surgery. It keeps your legs strong, your conditioning sharp, and your calorie burn high — all without touching the shoulder your surgeon told you to protect. Every session runs about an hour.</p>'+
       '<div class="card"><p style="margin:0 0 10px;color:var(--ink);font-weight:600;font-size:14px">The one rule this whole program is built around</p><p style="margin:0">Your surgeon said protect the shoulder — no loading. So the right arm does <b>nothing</b>: no weights, no hard grip, no bracing, nothing overhead or behind the body. Every lift here is chosen so your legs and hips work hard while that shoulder stays completely out of it.</p></div>'+
-      '<h2>What it\'s for</h2><ul>'+
-        '<li><b>Hold your muscle.</b> A calorie deficit with no training eats muscle. Hard leg work tells your body to keep it.</li>'+
-        '<li><b>Keep the cut moving.</b> Big-muscle leg training plus the walk finishers and 10k daily steps keep your burn high.</li>'+
-        '<li><b>Set up a faster comeback.</b> Going into surgery strong and conditioned makes the recovery on the other side smoother.</li></ul>'+
-      '<div class="card"><p style="margin:0 0 8px;color:var(--ink);font-weight:600;font-size:14px">Week 1 is a re-entry week</p><p style="margin:0">You\'re starting Tuesday, coming off about 3 weeks without training — so Monday is a rest day and Week 1 runs lighter on purpose: fewer sets, easier loads, and 3–4 reps in reserve. Doing too much on day one is how a comeback gets derailed. Full volume kicks in from Week 2.</p></div>'+
-      '<div class="card"><p style="margin:0 0 8px;color:var(--ink);font-weight:600;font-size:14px">No machine? Swap it.</p><p style="margin:0">Any exercise that needs a specific machine has a <b>Swap</b> button. Tap it and you get a shoulder-safe alternative that trains the same muscle — belt squat becomes leg press, hip-thrust machine becomes a high-foot leg press, the abductor machine becomes a floor exercise, and so on. Your choice is remembered.</p></div>'+
+      '<div class="card"><p style="margin:0 0 8px;color:var(--ink);font-weight:600;font-size:14px">Matched to your gym — one floor per workout</p><p style="margin:0">Only machines your gym actually has, and each workout stays on a single floor so you\'re not running up and down stairs. <b>Lower A and Lower C are on the 4th floor</b> (leg press, leg curl, leg extension); <b>Lower B is on the 3rd floor</b> (glute drive, hamstring roller, angled leg press); cardio days are any floor. Each day\'s page tells you where to go.</p></div>'+
+      '<div class="card"><p style="margin:0 0 8px;color:var(--ink);font-weight:600;font-size:14px">No supersets on machines</p><p style="margin:0">Accessories are <b>straight sets</b> — do all your sets on one machine, then move to the next. No jumping between machines and losing them to someone else. The only circuit is the bodyweight warm-up.</p></div>'+
+      '<div class="card"><p style="margin:0 0 8px;color:var(--ink);font-weight:600;font-size:14px">Machine taken? Swap it.</p><p style="margin:0">If a machine\'s in use, tap <b>Swap</b> for a shoulder-safe bodyweight version that trains the same muscle. Your choice is remembered.</p></div>'+
       '<h2>The week at a glance</h2>'+
       '<div class="legend">'+
         '<span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("dumbbell",17)+'</span>Strength</span>'+
@@ -509,13 +515,14 @@
         '<span class="lg"><span class="lgi" style="color:var(--rest)">'+ico("moon",17)+'</span>Rest</span></div>'+
       '<ul><li><b>Mon · Wed · Fri</b> — the three leg days (quad, glutes, then a lighter pump day). Each ends with a Zone 2 walk.</li>'+
         '<li><b>Tue · Thu</b> — conditioning (easy Zone 2, then intervals + a steady walk).</li>'+
-        '<li><b>Sun</b> — active recovery and mobility. <b>Sat</b> — full rest.</li></ul>'+
-      '<h2>How to read a day</h2><p>Exercises are lettered like the Fort. A tag on each block tells you exactly how to run it:</p>'+
-      '<div class="legend"><span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("repeat",17)+'</span><b style="color:var(--ink);font-weight:600">Circuit</b> — go A1 → A2 → A3 straight through, once, no rest</span></div>'+
-      '<div class="legend"><span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("repeat",17)+'</span><b style="color:var(--ink);font-weight:600">Superset</b> — C1 → C2 → C3 back-to-back with no rest, then rest 90s and repeat</span></div>'+
-      '<div class="legend"><span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("rows",17)+'</span><b style="color:var(--ink);font-weight:600">Straight sets</b> — finish all sets of one move (resting between) before the next</span></div>'+
-      '<p>Every number is exact — sets, reps, rest, treadmill incline and speed, bike cadence, and lifting tempo. Nothing to guess at and nothing to choose between.</p>'+
-      '<h2>How it changes each week</h2><p>Same routine every week — the numbers climb from the light re-entry week. The main lifts follow <b>"Six the Hard Way"</b>: six sets of 10, 8, 6, 6, 6, 6 at rising weight, resting 2 minutes between sets. Pick a top-set weight in Week 1 that\'s a comfortable 6 with 3–4 reps left — that\'s your reference to build from.</p>'+
+        '<li><b>Sat</b> — full rest. <b>Sun</b> — active recovery and mobility.</li></ul>'+
+      '<h2>How to read a day</h2>'+
+      '<p>Each page opens with your Apple Watch workout type and which floor to start on. Below that, exercises are lettered like the Fort:</p>'+
+      '<div class="legend"><span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("circuit",17)+'</span><b style="color:var(--ink);font-weight:600">Circuit</b> — the bodyweight warm-up: A1 → A2 → A3 once through, no rest</span></div>'+
+      '<div class="legend"><span class="lg"><span class="lgi" style="color:var(--blue)">'+ico("rows",17)+'</span><b style="color:var(--ink);font-weight:600">Straight sets</b> — everything else: finish all sets of one move (resting between) before the next</span></div>'+
+      '<p>Every number is exact — sets, reps, rest, machine setup, treadmill incline and speed, bike cadence, and lifting tempo.</p>'+
+      '<h2>Sets and how it progresses</h2>'+
+      '<p>Accessories are a steady <b>2–3 sets</b>: 2 in the light re-entry week, 3 from Week 2 on. The main lift (Leg Press on Monday, Glute Drive on Wednesday) is the exception — it runs the fuller <b>"Six the Hard Way"</b>: six sets of 10, 8, 6, 6, 6, 6 at rising weight, resting 2 minutes between. Same movements every week; you just add a little weight as they get easier.</p>'+
       '<div class="card rule"><p style="margin:0 0 10px;color:var(--warn-ink);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase">Safety rules — every session</p><ul class="rule">'+
         '<li>Right arm does nothing — no weight, grip, or bracing through it.</li>'+
         '<li>Leave clean reps in reserve. No max grinds (grinding = clenching = shoulder strain).</li>'+
@@ -524,22 +531,22 @@
         '<li>Pain, tingle, or instability in the shoulder → stop that movement.</li></ul></div>'+
       '<h2>Fuel it</h2><ul>'+
         '<li><b>180 g protein a day</b> to hold muscle into the layoff.</li>'+
-        '<li>Keep your <b>cut calories</b> where they are — the leg volume plus steps keeps your burn high.</li>'+
+        '<li>Keep your <b>cut calories</b> where they are — the leg volume plus the walk finishers keep your burn high.</li>'+
         '<li><b>Creatine</b> stays in. <b>Alcohol</b> near zero heading into surgery.</li></ul>'+
-      '<p style="font-size:12.5px;color:var(--ink-3);margin-top:16px">This block runs until your surgery date. One thing to confirm with your surgical team: that training legs on machines and doing leg-only cardio is fine with the shoulder fully unloaded.</p></div>';
+      '<p style="font-size:12.5px;color:var(--ink-3);margin-top:16px">This block runs until your surgery date. Confirm with your surgical team that training legs on machines and doing leg-only cardio is fine with the shoulder fully unloaded.</p></div>';
   }
 
   function renderRoot(){
     rootpage.innerHTML='<div class="navbar sched-nav" id="schednav"><div class="navtitle-sm">Training</div></div>'+
       '<div class="scroll" id="rootscroll">'+scheduleHTML()+'</div>';
     var sn=document.getElementById("schednav"),rs=document.getElementById("rootscroll");
-    rs.addEventListener("scroll",function(){ if(rs.scrollTop>34)sn.classList.add("solid"); else sn.classList.remove("solid"); });
+    rs.addEventListener("scroll",function(){ if(rs.scrollTop>34)sn.classList.add("solid"); else sn.classList.remove("solid"); saveNavSoon(); });
     document.getElementById("aboutlink").onclick=function(){openDetail("about");};
     wireDays();
     document.querySelectorAll("#weekwrap .weekpill").forEach(function(p){p.onclick=function(){
       week=+p.dataset.w;
       document.querySelectorAll("#weekwrap .weekpill").forEach(function(q){q.setAttribute("aria-selected",+q.dataset.w===week);});
-      document.getElementById("dayslist").innerHTML=daysListHTML(week); wireDays();
+      document.getElementById("dayslist").innerHTML=daysListHTML(week); wireDays(); saveNav();
     };});
   }
   function wireDays(){
@@ -551,6 +558,7 @@
       var sc=pg.querySelector(".scroll"), y=sc.scrollTop;
       sc.innerHTML=dayHTML(week,curDay); wireSwaps(pg); sc.scrollTop=y;
     };});
+    var sc=pg.querySelector(".scroll"); if(sc)sc.addEventListener("scroll",saveNavSoon);
   }
 
   var detail=null, dragging=false, startX=0, W=0;
@@ -565,24 +573,35 @@
       '<div class="scroll">'+body+'</div><div class="edge"></div>';
     pg.querySelector(".backbtn").onclick=function(){closeDetail();};
     if(kind==="day")wireSwaps(pg);
+    else { var sc=pg.querySelector(".scroll"); if(sc)sc.addEventListener("scroll",saveNavSoon); }
     attachSwipe(pg.querySelector(".edge"));
     return pg;
   }
-  function openDetail(kind,i){
+  function openDetail(kind,i,instant){
     if(detail)return;
-    curDay=(kind==="day")?i:null;
+    curKind=kind; curDay=(kind==="day")?i:null;
     detail=makeDetail(kind,i);
-    detail.style.transform="translateX(100%)"; detail.style.transition="none";
-    stack.appendChild(detail); detail.offsetWidth;
-    detail.style.transition=""; detail.style.transform="translateX(0)";
-    rootpage.style.transform="translateX(-24%)"; scrim.style.opacity=".12";
+    if(instant){
+      detail.style.transition="none"; detail.style.transform="translateX(0)";
+      rootpage.style.transition="none"; rootpage.style.transform="translateX(-24%)";
+      scrim.style.transition="none"; scrim.style.opacity=".12";
+      stack.appendChild(detail); detail.offsetWidth;
+      detail.style.transition=""; rootpage.style.transition=""; scrim.style.transition="";
+    } else {
+      detail.style.transform="translateX(100%)"; detail.style.transition="none";
+      stack.appendChild(detail); detail.offsetWidth;
+      detail.style.transition=""; detail.style.transform="translateX(0)";
+      rootpage.style.transform="translateX(-24%)"; scrim.style.opacity=".12";
+    }
+    saveNav();
   }
   function closeDetail(){
     if(!detail)return;
-    var d=detail; detail=null;
+    var d=detail; detail=null; curKind="schedule"; curDay=null;
     d.style.transform="translateX(100%)"; rootpage.style.transform=""; scrim.style.opacity="0";
     var done=function(){ if(d.parentNode)d.parentNode.removeChild(d); };
     d.addEventListener("transitionend",done); setTimeout(done,420);
+    saveNav();
   }
   function setProg(px){
     var p=Math.max(0,Math.min(1,px/W));
@@ -609,6 +628,14 @@
   }
 
   renderRoot();
+  setTimeout(function(){
+    var rsEl=document.getElementById("rootscroll"); if(savedNav && savedNav.rs && rsEl) rsEl.scrollTop=savedNav.rs;
+    if(savedNav && savedNav.v==="day" && savedNav.day!=null && DAYS[savedNav.day]) openDetail("day",savedNav.day,true);
+    else if(savedNav && savedNav.v==="about") openDetail("about",null,true);
+    if(detail && savedNav && savedNav.ds){ var s=detail.querySelector(".scroll"); if(s)s.scrollTop=savedNav.ds; }
+  },40);
+  window.addEventListener("pagehide",saveNav);
+  document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="hidden")saveNav(); });
 })();
 </script>
 
