@@ -245,8 +245,10 @@
   var BW_BRIDGE={name:"Single-Leg Glute Bridge",q:"single leg glute bridge",d:"One foot down, other leg out, drive the hips up.",setup:"Bodyweight · 2s hold"};
   var BW_CALF={name:"Standing Calf Raise (step)",q:"bodyweight calf raise on step",d:"Balls of the feet on a step, rise tall and lower slow.",setup:"Bodyweight · 3s down"};
   var A_STAIR={name:"Stair Master",q:"stair master cardio",d:"Steady climbing, good hand light on the rail.",setup:"60 steps/min · steady"};
+  var ALT_TREAD_Z2={name:"Incline Treadmill Walk",q:"incline treadmill walk zone 2",d:"Conversational Zone 2 on the treadmill, arms free.",p:"40:00",setup:"10% incline · 3.2 mph"};
+  var ALT_TREAD_THAW={name:"Incline Treadmill Walk",q:"incline treadmill walk",d:"Easy Zone 2 to cool down, arms free.",p:"8:00",setup:"8% incline · 3.2 mph"};
 
-  var W_STR="Traditional Strength Training", W_WALK="Indoor Walk", W_CROSS="Cross Training";
+  var W_STR="Traditional Strength Training", W_WALK="Indoor Walk", W_CROSS="Cross Training", W_STAIR="Stair Stepper", W_ELLIP="Elliptical";
 
   var DAYS=[
     // Mon — Strength Day 1
@@ -273,7 +275,7 @@
       ]},
 
     // Tue — Conditioning Day 1
-    { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning Day 1", sub:"Treadmill Walk", tag:"For Time", est:"~50 min", floor:"Any floor", watch:W_WALK,
+    { t:"cond", cls:"t-cond", ico:"pulse", title:"Conditioning Day 1", sub:"Stair Master", tag:"For Time", est:"~50 min", floor:"Any floor", watch:W_STAIR,
       focus:"Easy Zone 2 — conversational the whole way.",
       secs:[
         {l:"Warm Up",ic:"zap",struct:"circuit",slots:["A1","A2"],
@@ -281,8 +283,8 @@
             e("Bodyweight Lateral Lunge","bodyweight lateral lunge","Step wide, sit into the hip, push back.","10 / side","Bodyweight · full sit"),
             e("Dead-Bug (legs only)","dead bug exercise legs only","Extend one leg at a time, lower back flat.","12","Bodyweight · back flat")
           ]},
-        {l:"Walk",ic:"pulse",struct:"single",meta:"Zone 2",slots:["B"],
-          ex:[e("Incline Treadmill Walk","incline treadmill walk zone 2","Conversational pace — full sentences, no singing. Arms relaxed and free.","40:00","10% incline · 3.2 mph",A_STAIR)]},
+        {l:"Stairs",ic:"pulse",struct:"single",meta:"Zone 2",slots:["B"],
+          ex:[e("Stair Master","stair master cardio machine","Steady climbing at a conversational pace. Good hand light on the rail — never lean your weight on it.","35:00","~55 steps/min · steady",ALT_TREAD_Z2)]},
         {l:"Core",ic:"hex",struct:"straight",rest:"45s",slots:["C1","C2"],
           ex:[
             e("Lying Straight-Leg Raise","lying straight leg raise","Raise straight legs, lower slow.","15","Bodyweight · 3s down"),
@@ -310,7 +312,7 @@
             e("Angled Leg-Press Calf Press","leg press calf raise","Push through the balls of your feet, full stretch.","15","180–250 lb · 3s down",BW_CALF)
           ]},
         {l:"Thaw",ic:"pulse",struct:"single",meta:"Cool-down walk",slots:["D"],
-          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to cool down.","8:00","8% incline · 3.2 mph",A_STAIR)]}
+          ex:[e("Elliptical","elliptical machine cardio workout","Easy Zone 2 to cool down. Hands off the moving handles — let your legs drive.","8:00","Legs only · hands off handles",ALT_TREAD_THAW)]}
       ]},
 
     // Thu — Conditioning Day 2
@@ -355,7 +357,7 @@
             e("Leg-Press Calf Press","leg press calf raise","Push through the balls of your feet, full stretch.","15","180–250 lb · 3s down",BW_CALF)
           ]},
         {l:"Thaw",ic:"pulse",struct:"single",meta:"Cool-down walk",slots:["D"],
-          ex:[e("Incline Treadmill Walk","incline treadmill walk","Easy Zone 2 to close out the week's lifting.","8:00","8% incline · 3.2 mph",A_STAIR)]}
+          ex:[e("Stair Master","stair master cardio machine","Easy climbing to close out the week. Good hand light on the rail.","8:00","~45 steps/min · easy",ALT_TREAD_THAW)]}
       ]},
 
     // Sat — Rest
@@ -364,11 +366,11 @@
       secs:[]},
 
     // Sun — Conditioning Day 3
-    { t:"rec", cls:"t-rec", ico:"leaf", title:"Conditioning Day 3", sub:"Treadmill Walk", tag:"Recovery", est:"~50 min", floor:"Any floor", watch:W_WALK,
+    { t:"rec", cls:"t-rec", ico:"leaf", title:"Conditioning Day 3", sub:"Elliptical", tag:"Recovery", est:"~50 min", floor:"Any floor", watch:W_ELLIP,
       focus:"Light cardio and mobility to stay loose.",
       secs:[
-        {l:"Walk",ic:"pulse",struct:"single",meta:"Zone 2",slots:["A"],
-          ex:[e("Zone 2 Incline Walk","zone 2 incline treadmill walk","Easy walk to flush the legs. Hold a full conversation.","40:00","8% incline · 3.0 mph",A_STAIR)]},
+        {l:"Elliptical",ic:"pulse",struct:"single",meta:"Zone 2",slots:["A"],
+          ex:[e("Elliptical","elliptical machine cardio workout","Easy leg-driven Zone 2 to flush the legs. Hands off the moving handles — let your legs drive.","40:00","Resistance 6–8 · hands off handles",ALT_TREAD_Z2)]},
         {l:"Mobility",ic:"leaf",struct:"single",meta:"~8 min",slots:["B"],
           ex:[e("Lower-Body Mobility Flow","lower body mobility routine","Hips, ankles, couch stretch — about 2 min each. Skip anything that pulls the shoulder.","8 min","~2 min per position")]},
         {l:"Core",ic:"hex",struct:"straight",rest:"45s",slots:["C1","C2"],
