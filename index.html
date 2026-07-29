@@ -380,7 +380,32 @@
           ]}
       ]}
   ];
-  function dayData(w,i){ return DAYS[i]; }
+  var JUL_29_STRENGTH_DAY_2={
+    t:"strength", cls:"t-strength", ico:"dumbbell", title:"Strength Day 2", sub:"Leg Press", tag:"For Weight", est:"~80 min", floor:"4th → 3rd floor", watch:W_STR,
+    focus:"Leg Press, then every shoulder-safe leg strength machine.",
+    secs:[
+      {l:"Warm Up",ic:"zap",struct:"circuit",slots:["A1","A2","A3"],
+        ex:[
+          e("Bodyweight Hip Hinge","bodyweight hip hinge pattern","Hips back, hands down your thighs. Feel the hamstrings.","12","Bodyweight · slow"),
+          e("Frog Pump","frog pump glute exercise","Soles together, pump the hips and squeeze.","20","Bodyweight · hard squeeze"),
+          e("Bodyweight Squat","bodyweight air squat form","Sit down and drive up. Warms the knees and hips.","15","Bodyweight · full depth")
+        ]},
+      {l:"Main Lift",ic:"dumbbell",struct:"six",rest:"2 min",slots:["B"],
+        ex:[e("Leg Press","leg press machine how to","Feet mid-platform. Push through the whole foot, stop short of lockout.","","Feet mid · 2s down",BW_BULG,440)]},
+      {l:"Accessories",ic:"layers",struct:"straight",sets:2,rest:"90s",slots:["C1","C2","C3","C4","C5","C6"],
+        ex:[
+          e("Glute Master","glute master machine exercise","Drive through the working heel. Keep the shoulder relaxed.","12 / leg","60–90 lb · controlled",BW_BRIDGE),
+          e("Hip Abduction","hip abduction machine proper form","Push the knees out, pause, and return slowly.","15","70–110 lb · 2s hold"),
+          e("Leg Curl","leg curl machine hamstring","Curl the heels down, squeeze the hamstrings.","12","80–110 lb · 2s down",BW_SLIDE),
+          e("Leg Extension","leg extension machine proper form","Straighten the legs, squeeze the quads, and lower slowly.","12","90–130 lb · 2s down",BW_SISSY),
+          e("Angled Leg Press (feet high)","leg press feet high glutes","Feet high, drive from the heels.","12","230–300 lb · feet high",BW_BULG),
+          e("Glute Drive","glute drive machine hip thrust","Drive through the heels and squeeze at the top.","12","180–240 lb · 1s squeeze",BW_BRIDGE)
+        ]},
+      {l:"Thaw",ic:"pulse",struct:"single",meta:"Cool-down walk",slots:["D"],
+        ex:[e("Elliptical","elliptical machine cardio workout","Easy Zone 2 to cool down. Hands off the moving handles.","8:00","Legs only · hands off handles",ALT_TREAD_THAW)]}
+    ]};
+
+  function dayData(w,i){ return (w===2&&i===2)?JUL_29_STRENGTH_DAY_2:DAYS[i]; }
 
   var week=0, curDay=null, curKind="schedule";
   var todayIdx=(function(){var n=new Date();var t=new Date(n.getFullYear(),n.getMonth(),n.getDate());var d=Math.round((t-BASE)/86400000);return (d>=0&&d<28)?d:-1;})();
@@ -428,7 +453,7 @@
       h+='<div class="chip"><div class="r num">'+reps+'</div><div class="wt num">'+wt+'</div><div class="p num">'+pct+'%</div></div>';}
     return h+'</div>';
   }
-  function exHTML(base,slot,struct,key){
+  function exHTML(base,slot,struct,key,sets){
     var on=!!SWAP[key], alt=base.alt, ex=base;
     if(on&&alt){ ex={name:alt.name,q:alt.q,d:alt.d,p:(alt.p||base.p),setup:(alt.setup||base.setup)}; }
     var h='<div class="ex"><div class="slot">'+esc(slot)+'</div><div class="exbody">';
@@ -439,7 +464,7 @@
       if(ex.setup)h+='<div class="exsetup"><span class="si">'+ico("gauge",13)+'</span>'+esc(ex.setup)+'</div>';
       h+='<p class="exdesc">'+esc(ex.d)+'</p><p class="setnote">Weights are estimates from your lifts. In Week 1, dial them so the last two sets leave 2–3 reps in you — never grind.</p>';
     } else {
-      var rx = (struct==="straight") ? (setsN()+' × '+ex.p) : ex.p;
+      var rx = (struct==="straight") ? ((sets||setsN())+' × '+ex.p) : ex.p;
       h+='<div class="exhead"><div class="exname">'+esc(ex.name)+'</div><div class="exrx num">'+esc(rx)+'</div></div>';
       if(on)h+='<div class="swaptag">'+ico("swap",11)+'Swapped</div>';
       if(ex.setup)h+='<div class="exsetup"><span class="si">'+ico("gauge",13)+'</span>'+esc(ex.setup)+'</div>';
@@ -453,7 +478,7 @@
   function structMeta(sec){
     if(sec.struct==="circuit")return '<div class="struct">'+ico("circuit",12)+'Circuit</div><span>'+sec.slots.join(" → ")+' once through · no rest</span>';
     if(sec.struct==="six")return '<div class="struct">'+ico("rows",12)+'Straight sets</div><span>6 sets · rest '+esc(sec.rest)+' between</span>';
-    if(sec.struct==="straight")return '<div class="struct">'+ico("rows",12)+'Straight sets</div><span>'+setsN()+' sets each · rest '+esc(sec.rest)+'</span>';
+    if(sec.struct==="straight")return '<div class="struct">'+ico("rows",12)+'Straight sets</div><span>'+(sec.sets||setsN())+' sets each · rest '+esc(sec.rest)+'</span>';
     if(sec.struct==="single")return '<div class="struct">'+ico("clock",12)+esc(sec.meta||'')+'</div>';
     return '';
   }
@@ -472,7 +497,7 @@
     if(day.t!=="rest")h+='<div class="safety"><span class="shd">'+ico("shield",18)+'</span><p><b>Shoulder rule&nbsp;&nbsp;</b>Right arm does nothing — no weight, grip, or bracing, nothing overhead. Stop any move that pinches or feels unstable.</p></div>';
     for(var s=0;s<day.secs.length;s++){var sec=day.secs[s];
       h+='<div class="sec"><div class="seclabel"><span class="sic">'+ico(sec.ic,16)+'</span><b>'+esc(sec.l)+'</b></div><div class="secmeta">'+structMeta(sec)+'</div>';
-      for(var x=0;x<sec.ex.length;x++)h+=exHTML(sec.ex[x],sec.slots[x],sec.struct,"d"+i+"s"+s+"e"+x);
+      for(var x=0;x<sec.ex.length;x++)h+=exHTML(sec.ex[x],sec.slots[x],sec.struct,"d"+i+"s"+s+"e"+x,sec.sets);
       h+='</div>';}
     return h+'</div>';
   }
